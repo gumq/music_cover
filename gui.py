@@ -73,6 +73,14 @@ def create_video():
     volume = volume_entry.get().strip()
     resolution = res_entry.get().strip()
 
+    # New: MIDI/SoundFont parameters
+    soundfont = sf_entry.get().strip()
+    midi_pitch = midi_pitch_entry.get().strip()
+    midi_prog = midi_prog_entry.get().strip()
+    midi_vel = midi_vel_entry.get().strip()
+    midi_min = midi_min_entry.get().strip()
+    fs_gain = fs_gain_entry.get().strip()
+
     if not input_audio or not image or not output:
         messagebox.showerror("Lỗi", "Vui lòng chọn đầy đủ: âm thanh, ảnh và file xuất.")
         return
@@ -102,6 +110,20 @@ def create_video():
     if mode == "loop" and loop_hours:
         cmd.extend(["--loop_hours", loop_hours])
 
+    # Pass MIDI/SF args
+    if soundfont:
+        cmd.extend(["--soundfont", soundfont])
+    if midi_pitch:
+        cmd.extend(["--midi_pitch", midi_pitch])
+    if midi_prog:
+        cmd.extend(["--midi_program", midi_prog])
+    if midi_vel:
+        cmd.extend(["--midi_velocity", midi_vel])
+    if midi_min:
+        cmd.extend(["--midi_min_note_ms", midi_min])
+    if fs_gain:
+        cmd.extend(["--fs_gain", fs_gain])
+
     try:
         # Hiện console log trong terminal đang mở; nếu muốn hiện log vào GUI thì thay Popen + đọc stdout.
         subprocess.run(cmd, check=True)
@@ -127,60 +149,92 @@ image_entry = tk.Entry(root, width=54)
 image_entry.grid(row=1, column=1, padx=6, pady=4)
 tk.Button(root, text="Chọn", command=lambda: browse_file(image_entry, [("Image Files", "*.jpg *.jpeg *.png")], "Chọn ảnh nền")).grid(row=1, column=2, padx=6, pady=4)
 
-# Hàng 2: Tiếng mưa (tùy chọn)
-tk.Label(root, text="File tiếng mưa (tuỳ chọn):").grid(row=2, column=0, sticky="e", padx=6, pady=4)
-rain_entry = tk.Entry(root, width=54)
-rain_entry.grid(row=2, column=1, padx=6, pady=4)
-tk.Button(root, text="Chọn", command=lambda: browse_file(rain_entry, [("Audio Files", "*.mp3 *.wav *.flac *.ogg")], "Chọn file tiếng mưa")).grid(row=2, column=2, padx=6, pady=4)
+# Hàng 1.5: SoundFont
+tk.Label(root, text="SoundFont (.sf2) cho synth:").grid(row=2, column=0, sticky="e", padx=6, pady=4)
+sf_entry = tk.Entry(root, width=54)
+sf_entry.grid(row=2, column=1, padx=6, pady=4)
+tk.Button(root, text="Chọn", command=lambda: browse_file(sf_entry, [("SoundFont", "*.sf2")], "Chọn SoundFont (.sf2)")).grid(row=2, column=2, padx=6, pady=4)
 
-# Hàng 3: File xuất
-tk.Label(root, text="File xuất (.mp4):").grid(row=3, column=0, sticky="e", padx=6, pady=4)
+# Hàng 2: Tiếng mưa (tùy chọn) -> dịch xuống 3
+tk.Label(root, text="File tiếng mưa (tuỳ chọn):").grid(row=3, column=0, sticky="e", padx=6, pady=4)
+rain_entry = tk.Entry(root, width=54)
+rain_entry.grid(row=3, column=1, padx=6, pady=4)
+tk.Button(root, text="Chọn", command=lambda: browse_file(rain_entry, [("Audio Files", "*.mp3 *.wav *.flac *.ogg")], "Chọn file tiếng mưa")).grid(row=3, column=2, padx=6, pady=4)
+
+# Hàng 3: File xuất -> dịch xuống 4
+tk.Label(root, text="File xuất (.mp4):").grid(row=4, column=0, sticky="e", padx=6, pady=4)
 output_entry = tk.Entry(root, width=54)
-output_entry.grid(row=3, column=1, padx=6, pady=4)
-tk.Button(root, text="Chọn", command=lambda: browse_save_file(output_entry)).grid(row=3, column=2, padx=6, pady=4)
+output_entry.grid(row=4, column=1, padx=6, pady=4)
+tk.Button(root, text="Chọn", command=lambda: browse_save_file(output_entry)).grid(row=4, column=2, padx=6, pady=4)
 
 # Hàng 4: Pitch / Tempo
-tk.Label(root, text="Pitch (±semitones):").grid(row=4, column=0, sticky="e", padx=6, pady=4)
+tk.Label(root, text="Pitch (±semitones):").grid(row=5, column=0, sticky="e", padx=6, pady=4)
 pitch_entry = tk.Entry(root, width=10)
 pitch_entry.insert(0, "0.0")
-pitch_entry.grid(row=4, column=1, sticky="w", padx=6, pady=4)
+pitch_entry.grid(row=5, column=1, sticky="w", padx=6, pady=4)
 
-tk.Label(root, text="Tempo (1.0=bt):").grid(row=4, column=1, sticky="e", padx=6, pady=4)
+tk.Label(root, text="Tempo (1.0=bt):").grid(row=5, column=1, sticky="e", padx=6, pady=4)
 tempo_entry = tk.Entry(root, width=10)
 tempo_entry.insert(0, "1.0")
-tempo_entry.grid(row=4, column=1, sticky="e", padx=120, pady=4)  # căn bên phải một chút
+tempo_entry.grid(row=5, column=1, sticky="e", padx=120, pady=4)
 
 # Hàng 5: Volume / Rain dB
-tk.Label(root, text="Volume (1.0=bt):").grid(row=5, column=0, sticky="e", padx=6, pady=4)
+tk.Label(root, text="Volume (1.0=bt):").grid(row=6, column=0, sticky="e", padx=6, pady=4)
 volume_entry = tk.Entry(root, width=10)
 volume_entry.insert(0, "1.0")
-volume_entry.grid(row=5, column=1, sticky="w", padx=6, pady=4)
+volume_entry.grid(row=6, column=1, sticky="w", padx=6, pady=4)
 
-tk.Label(root, text="Rain dB (âm<0):").grid(row=5, column=1, sticky="e", padx=6, pady=4)
+tk.Label(root, text="Rain dB (âm<0):").grid(row=6, column=1, sticky="e", padx=6, pady=4)
 rain_db_entry = tk.Entry(root, width=10)
 rain_db_entry.insert(0, "-18.0")
-rain_db_entry.grid(row=5, column=1, sticky="e", padx=120, pady=4)
+rain_db_entry.grid(row=6, column=1, sticky="e", padx=120, pady=4)
 
 # Hàng 6: Reverb / Resolution
 reverb_var = tk.BooleanVar()
-tk.Checkbutton(root, text="Hiệu ứng vang (reverb)", variable=reverb_var).grid(row=6, column=1, sticky="w", padx=6, pady=4)
+tk.Checkbutton(root, text="Hiệu ứng vang (reverb)", variable=reverb_var).grid(row=7, column=1, sticky="w", padx=6, pady=4)
 
-tk.Label(root, text="Độ phân giải (WxH):").grid(row=6, column=0, sticky="e", padx=6, pady=4)
+tk.Label(root, text="Độ phân giải (WxH):").grid(row=7, column=0, sticky="e", padx=6, pady=4)
 res_entry = tk.Entry(root, width=12)
 res_entry.insert(0, "1920x1080")
-res_entry.grid(row=6, column=1, sticky="w", padx=120, pady=4)
+res_entry.grid(row=7, column=1, sticky="w", padx=120, pady=4)
 
 # Hàng 7: Chế độ / Loop
-tk.Label(root, text="Chế độ:").grid(row=7, column=0, sticky="e", padx=6, pady=4)
+tk.Label(root, text="Chế độ:").grid(row=8, column=0, sticky="e", padx=6, pady=4)
 mode_var = tk.StringVar(value="full")
-tk.OptionMenu(root, mode_var, "full", "loop").grid(row=7, column=1, sticky="w", padx=6, pady=4)
+tk.OptionMenu(root, mode_var, "full", "loop").grid(row=8, column=1, sticky="w", padx=6, pady=4)
 
-tk.Label(root, text="Loop giờ:").grid(row=7, column=1, sticky="e", padx=6, pady=4)
+tk.Label(root, text="Loop giờ:").grid(row=8, column=1, sticky="e", padx=6, pady=4)
 loop_entry = tk.Entry(root, width=10)
 loop_entry.insert(0, "1")
-loop_entry.grid(row=7, column=1, sticky="e", padx=120, pady=4)
+loop_entry.grid(row=8, column=1, sticky="e", padx=120, pady=4)
 
-# Hàng 8: Nút
-tk.Button(root, text="Tạo video", command=create_video, bg="lightblue").grid(row=8, column=1, pady=12)
+# Hàng 8: Tùy chọn MIDI
+tk.Label(root, text="MIDI pitch (±semi):").grid(row=9, column=0, sticky="e", padx=6, pady=4)
+midi_pitch_entry = tk.Entry(root, width=10)
+midi_pitch_entry.insert(0, "0.0")
+midi_pitch_entry.grid(row=9, column=1, sticky="w", padx=6, pady=4)
+
+tk.Label(root, text="Program (0-127):").grid(row=9, column=1, sticky="e", padx=6, pady=4)
+midi_prog_entry = tk.Entry(root, width=10)
+midi_prog_entry.insert(0, "0")
+midi_prog_entry.grid(row=9, column=1, sticky="e", padx=120, pady=4)
+
+tk.Label(root, text="Velocity (0-127):").grid(row=10, column=0, sticky="e", padx=6, pady=4)
+midi_vel_entry = tk.Entry(root, width=10)
+midi_vel_entry.insert(0, "100")
+midi_vel_entry.grid(row=10, column=1, sticky="w", padx=6, pady=4)
+
+tk.Label(root, text="Min note (ms):").grid(row=10, column=1, sticky="e", padx=6, pady=4)
+midi_min_entry = tk.Entry(root, width=10)
+midi_min_entry.insert(0, "60")
+midi_min_entry.grid(row=10, column=1, sticky="e", padx=120, pady=4)
+
+tk.Label(root, text="FS gain (0-5):").grid(row=11, column=0, sticky="e", padx=6, pady=4)
+fs_gain_entry = tk.Entry(root, width=10)
+fs_gain_entry.insert(0, "0.8")
+fs_gain_entry.grid(row=11, column=1, sticky="w", padx=6, pady=4)
+
+# Hàng 12: Nút
+tk.Button(root, text="Tạo video", command=create_video, bg="lightblue").grid(row=12, column=1, pady=12)
 
 root.mainloop()
