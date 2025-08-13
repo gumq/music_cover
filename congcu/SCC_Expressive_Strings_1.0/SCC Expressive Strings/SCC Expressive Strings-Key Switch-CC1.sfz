@@ -1,0 +1,1150 @@
+// ***************************
+// * SCC Expressive Strings  *
+// * by S. Christian Collins *
+// *     3/7/2016 v1.0       *
+// *-------------------------*
+// * Use CC1 for expression  *
+// ***************************
+
+<control>
+set_cc1=100
+label_cc1=Expression (cc1)
+set_cc67=0
+label_cc67=Tremolo (cc67)
+
+<global>
+sw_lokey=a0  sw_hikey=c8  sw_default=a0
+
+// *******************
+// * Sustained - CC1 *
+// *******************
+
+// pp
+<group>
+sw_lolast=a0  sw_hilast=a0
+sw_label=Sustain-CC1
+ampeg_attack=0.180
+ampeg_vel2attack=-0.172
+ampeg_release=1.4
+ampeg_vel2release=-0.3
+amp_veltrack=0
+offset_cc131=12000
+amplitude_oncc1=100  amplitude_smoothcc1=200  amplitude_curvecc1=8
+tune=-3
+
+<region>
+sample=samples/arco/C0_pp.wav lokey=c1 hikey=d1 pitch_keycenter=c1
+<region>
+sample=samples/arco/D#0_pp.wav lokey=d#1 hikey=f1 pitch_keycenter=d#1
+<region>
+sample=samples/arco/F#0_pp.wav lokey=f#1 hikey=g#1 pitch_keycenter=f#1
+<region>
+sample=samples/arco/A0_pp.wav lokey=a1 hikey=b1 pitch_keycenter=a1
+<region>
+sample=samples/arco/C1_pp.wav lokey=c2 hikey=d2 pitch_keycenter=c2
+<region>
+sample=samples/arco/D#1_pp.wav lokey=d#2 hikey=f2 pitch_keycenter=d#2
+<region>
+sample=samples/arco/F#1_pp.wav lokey=f#2 hikey=g#2 pitch_keycenter=f#2
+<region>
+sample=samples/arco/A1_pp.wav lokey=a2 hikey=b2 pitch_keycenter=a2
+<region>
+sample=samples/arco/C2_pp.wav lokey=c3 hikey=d3 pitch_keycenter=c3
+<region>
+sample=samples/arco/D#2_pp.wav lokey=d#3 hikey=f3 pitch_keycenter=d#3
+<region>
+sample=samples/arco/F#2_pp.wav lokey=f#3 hikey=g#3 pitch_keycenter=f#3
+<region>
+sample=samples/arco/A2_pp.wav lokey=a3 hikey=b3 pitch_keycenter=a3
+<region>
+sample=samples/arco/C3_pp.wav lokey=c4 hikey=d4 pitch_keycenter=c4
+<region>
+sample=samples/arco/D#3_pp.wav lokey=d#4 hikey=f4 pitch_keycenter=d#4
+<region>
+sample=samples/arco/F#3_pp.wav lokey=f#4 hikey=g#4 pitch_keycenter=f#4
+<region>
+sample=samples/arco/A3_pp.wav lokey=a4 hikey=b4 pitch_keycenter=a4
+<region>
+sample=samples/arco/C4_pp.wav lokey=c5 hikey=d5 pitch_keycenter=c5
+<region>
+sample=samples/arco/D#4_pp.wav lokey=d#5 hikey=f5 pitch_keycenter=d#5
+<region>
+sample=samples/arco/F#4_pp.wav lokey=f#5 hikey=g#5 pitch_keycenter=f#5
+<region>
+sample=samples/arco/A4_pp.wav lokey=a5 hikey=b5 pitch_keycenter=a5
+<region>
+sample=samples/arco/C5_pp.wav lokey=c6 hikey=d6 pitch_keycenter=c6
+<region>
+sample=samples/arco/D#5_pp.wav lokey=d#6 hikey=f6 pitch_keycenter=d#6
+<region>
+sample=samples/arco/F#5_pp.wav lokey=f#6 hikey=g#6 pitch_keycenter=f#6
+<region>
+sample=samples/arco/A5_pp.wav lokey=a6 hikey=b6 pitch_keycenter=a6
+<region>
+sample=samples/arco/C6_pp.wav lokey=c7 hikey=e7 pitch_keycenter=c7
+
+
+// ff
+<group>
+sw_lolast=a0  sw_hilast=a0
+sw_label=Sustain-CC1
+ampeg_attack=0.180
+ampeg_vel2attack=-0.172
+ampeg_release=1.4
+ampeg_vel2release=-0.3
+amp_veltrack=0
+offset_cc131=12000
+amplitude_oncc1=100  amplitude_smoothcc1=200  amplitude_curvecc1=9
+tune=-3
+
+<region>
+sample=samples/arco/C0_ff.wav lokey=c1 hikey=d1 pitch_keycenter=c1
+<region>
+sample=samples/arco/D#0_ff.wav lokey=d#1 hikey=f1 pitch_keycenter=d#1
+<region>
+sample=samples/arco/F#0_ff.wav lokey=f#1 hikey=g#1 pitch_keycenter=f#1
+<region>
+sample=samples/arco/A0_ff.wav lokey=a1 hikey=b1 pitch_keycenter=a1
+<region>
+sample=samples/arco/C1_ff.wav lokey=c2 hikey=d2 pitch_keycenter=c2
+<region>
+sample=samples/arco/D#1_ff.wav lokey=d#2 hikey=f2 pitch_keycenter=d#2
+<region>
+sample=samples/arco/F#1_ff.wav lokey=f#2 hikey=g#2 pitch_keycenter=f#2
+<region>
+sample=samples/arco/A1_ff.wav lokey=a2 hikey=b2 pitch_keycenter=a2
+<region>
+sample=samples/arco/C2_ff.wav lokey=c3 hikey=d3 pitch_keycenter=c3
+<region>
+sample=samples/arco/D#2_ff.wav lokey=d#3 hikey=f3 pitch_keycenter=d#3
+<region>
+sample=samples/arco/F#2_ff.wav lokey=f#3 hikey=g#3 pitch_keycenter=f#3
+<region>
+sample=samples/arco/A2_ff.wav lokey=a3 hikey=b3 pitch_keycenter=a3
+<region>
+sample=samples/arco/C3_ff.wav lokey=c4 hikey=d4 pitch_keycenter=c4
+<region>
+sample=samples/arco/D#3_ff.wav lokey=d#4 hikey=f4 pitch_keycenter=d#4
+<region>
+sample=samples/arco/F#3_ff.wav lokey=f#4 hikey=g#4 pitch_keycenter=f#4
+<region>
+sample=samples/arco/A3_ff.wav lokey=a4 hikey=b4 pitch_keycenter=a4
+<region>
+sample=samples/arco/C4_ff.wav lokey=c5 hikey=d5 pitch_keycenter=c5
+<region>
+sample=samples/arco/D#4_ff.wav lokey=d#5 hikey=f5 pitch_keycenter=d#5
+<region>
+sample=samples/arco/F#4_ff.wav lokey=f#5 hikey=g#5 pitch_keycenter=f#5
+<region>
+sample=samples/arco/A4_ff.wav lokey=a5 hikey=b5 pitch_keycenter=a5
+<region>
+sample=samples/arco/C5_ff.wav lokey=c6 hikey=d6 pitch_keycenter=c6
+<region>
+sample=samples/arco/D#5_ff.wav lokey=d#6 hikey=f6 pitch_keycenter=d#6
+<region>
+sample=samples/arco/F#5_ff.wav lokey=f#6 hikey=g#6 pitch_keycenter=f#6
+<region>
+sample=samples/arco/A5_ff.wav lokey=a6 hikey=b6 pitch_keycenter=a6
+<region>
+sample=samples/arco/C6_ff.wav lokey=c7 hikey=e7 pitch_keycenter=c7
+
+
+//staccato attack layer
+<group>
+sw_lolast=a0  sw_hilast=a0
+sw_label=Sustain-CC1
+loop_mode=no_loop
+ampeg_attack=0.02
+ampeg_release=3
+amplitude=47
+amplitude_oncc1=100  amplitude_smoothcc1=200  amplitude_curvecc1=10
+tune=-12
+
+<region>
+sample=samples/stacc/C1.wav lokey=c1 hikey=d2 pitch_keycenter=c2
+offset=1000
+<region>
+sample=samples/stacc/D#1.wav lokey=d#2 hikey=f2 pitch_keycenter=d#2
+offset=1500
+<region>
+sample=samples/stacc/F#1.wav lokey=f#2 hikey=g#2 pitch_keycenter=f#2
+offset=2500
+<region>
+sample=samples/stacc/A1.wav lokey=a2 hikey=b2 pitch_keycenter=a2
+offset=1000
+<region>
+sample=samples/stacc/C2.wav lokey=c3 hikey=d3 pitch_keycenter=c3
+offset=2500
+<region>
+sample=samples/stacc/D#2.wav lokey=d#3 hikey=f3 pitch_keycenter=d#3
+offset=1000
+<region>
+sample=samples/stacc/F#2.wav lokey=f#3 hikey=g#3 pitch_keycenter=f#3
+offset=1000
+<region>
+sample=samples/stacc/A2.wav lokey=a3 hikey=b3 pitch_keycenter=a3
+offset=1000
+<region>
+sample=samples/stacc/C3.wav lokey=c4 hikey=d4 pitch_keycenter=c4
+offset=1500
+<region>
+sample=samples/stacc/D#3.wav lokey=d#4 hikey=f4 pitch_keycenter=d#4
+offset=3000
+<region>
+sample=samples/stacc/F#3.wav lokey=f#4 hikey=g#4 pitch_keycenter=f#4
+offset=2000
+<region>
+sample=samples/stacc/A3.wav lokey=a4 hikey=b4 pitch_keycenter=a4
+offset=1500
+<region>
+sample=samples/stacc/C4.wav lokey=c5 hikey=d5 pitch_keycenter=c5
+offset=1500
+<region>
+sample=samples/stacc/D#4.wav lokey=d#5 hikey=f5 pitch_keycenter=d#5
+offset=500
+<region>
+sample=samples/stacc/F#4.wav lokey=f#5 hikey=g#5 pitch_keycenter=f#5
+offset=1500
+<region>
+sample=samples/stacc/A4.wav lokey=a5 hikey=b5 pitch_keycenter=a5
+offset=500
+<region>
+sample=samples/stacc/C5.wav lokey=c6 hikey=d6 pitch_keycenter=c6
+offset=500
+<region>
+sample=samples/stacc/D#5.wav lokey=d#6 hikey=f6 pitch_keycenter=d#6
+offset=500
+<region>
+sample=samples/stacc/F#5.wav lokey=f#6 hikey=g#6 pitch_keycenter=f#6
+offset=500
+<region>
+sample=samples/stacc/A5.wav lokey=a6 hikey=b6 pitch_keycenter=a6
+offset=500
+<region>
+sample=samples/stacc/C6.wav lokey=c7 hikey=e7 pitch_keycenter=c7
+offset=1000
+
+
+// *************************************
+// * Sustained - velocity control only *
+// *************************************
+
+// pp
+<group>
+sw_lolast=a#0  sw_hilast=a#0
+sw_label=Sustain-velo
+lovel=0 hivel=86
+ampeg_attack=0.180
+ampeg_vel2attack=-0.172
+ampeg_release=1.4
+ampeg_vel2release=-0.3
+offset_cc131=8000
+tune=-3
+amp_veltrack=85
+
+<region>
+sample=samples/arco/C0_pp.wav lokey=c1 hikey=d1 pitch_keycenter=c1
+<region>
+sample=samples/arco/D#0_pp.wav lokey=d#1 hikey=f1 pitch_keycenter=d#1
+<region>
+sample=samples/arco/F#0_pp.wav lokey=f#1 hikey=g#1 pitch_keycenter=f#1
+<region>
+sample=samples/arco/A0_pp.wav lokey=a1 hikey=b1 pitch_keycenter=a1
+<region>
+sample=samples/arco/C1_pp.wav lokey=c2 hikey=d2 pitch_keycenter=c2
+<region>
+sample=samples/arco/D#1_pp.wav lokey=d#2 hikey=f2 pitch_keycenter=d#2
+<region>
+sample=samples/arco/F#1_pp.wav lokey=f#2 hikey=g#2 pitch_keycenter=f#2
+<region>
+sample=samples/arco/A1_pp.wav lokey=a2 hikey=b2 pitch_keycenter=a2
+<region>
+sample=samples/arco/C2_pp.wav lokey=c3 hikey=d3 pitch_keycenter=c3
+<region>
+sample=samples/arco/D#2_pp.wav lokey=d#3 hikey=f3 pitch_keycenter=d#3
+<region>
+sample=samples/arco/F#2_pp.wav lokey=f#3 hikey=g#3 pitch_keycenter=f#3
+<region>
+sample=samples/arco/A2_pp.wav lokey=a3 hikey=b3 pitch_keycenter=a3
+<region>
+sample=samples/arco/C3_pp.wav lokey=c4 hikey=d4 pitch_keycenter=c4
+<region>
+sample=samples/arco/D#3_pp.wav lokey=d#4 hikey=f4 pitch_keycenter=d#4
+<region>
+sample=samples/arco/F#3_pp.wav lokey=f#4 hikey=g#4 pitch_keycenter=f#4
+<region>
+sample=samples/arco/A3_pp.wav lokey=a4 hikey=b4 pitch_keycenter=a4
+<region>
+sample=samples/arco/C4_pp.wav lokey=c5 hikey=d5 pitch_keycenter=c5
+<region>
+sample=samples/arco/D#4_pp.wav lokey=d#5 hikey=f5 pitch_keycenter=d#5
+<region>
+sample=samples/arco/F#4_pp.wav lokey=f#5 hikey=g#5 pitch_keycenter=f#5
+<region>
+sample=samples/arco/A4_pp.wav lokey=a5 hikey=b5 pitch_keycenter=a5
+<region>
+sample=samples/arco/C5_pp.wav lokey=c6 hikey=d6 pitch_keycenter=c6
+<region>
+sample=samples/arco/D#5_pp.wav lokey=d#6 hikey=f6 pitch_keycenter=d#6
+<region>
+sample=samples/arco/F#5_pp.wav lokey=f#6 hikey=g#6 pitch_keycenter=f#6
+<region>
+sample=samples/arco/A5_pp.wav lokey=a6 hikey=b6 pitch_keycenter=a6
+<region>
+sample=samples/arco/C6_pp.wav lokey=c7 hikey=e7 pitch_keycenter=c7
+
+
+// ff
+<group>
+sw_lolast=a#0  sw_hilast=a#0
+sw_label=Sustain-velo
+lovel=87 hivel=127
+ampeg_attack=0.180
+ampeg_vel2attack=-0.172
+ampeg_release=1.4
+ampeg_vel2release=-0.3
+offset_cc131=8000
+tune=-3
+amp_veltrack=85
+
+<region>
+sample=samples/arco/C0_ff.wav lokey=c1 hikey=d1 pitch_keycenter=c1
+<region>
+sample=samples/arco/D#0_ff.wav lokey=d#1 hikey=f1 pitch_keycenter=d#1
+<region>
+sample=samples/arco/F#0_ff.wav lokey=f#1 hikey=g#1 pitch_keycenter=f#1
+<region>
+sample=samples/arco/A0_ff.wav lokey=a1 hikey=b1 pitch_keycenter=a1
+<region>
+sample=samples/arco/C1_ff.wav lokey=c2 hikey=d2 pitch_keycenter=c2
+<region>
+sample=samples/arco/D#1_ff.wav lokey=d#2 hikey=f2 pitch_keycenter=d#2
+<region>
+sample=samples/arco/F#1_ff.wav lokey=f#2 hikey=g#2 pitch_keycenter=f#2
+<region>
+sample=samples/arco/A1_ff.wav lokey=a2 hikey=b2 pitch_keycenter=a2
+<region>
+sample=samples/arco/C2_ff.wav lokey=c3 hikey=d3 pitch_keycenter=c3
+<region>
+sample=samples/arco/D#2_ff.wav lokey=d#3 hikey=f3 pitch_keycenter=d#3
+<region>
+sample=samples/arco/F#2_ff.wav lokey=f#3 hikey=g#3 pitch_keycenter=f#3
+<region>
+sample=samples/arco/A2_ff.wav lokey=a3 hikey=b3 pitch_keycenter=a3
+<region>
+sample=samples/arco/C3_ff.wav lokey=c4 hikey=d4 pitch_keycenter=c4
+<region>
+sample=samples/arco/D#3_ff.wav lokey=d#4 hikey=f4 pitch_keycenter=d#4
+<region>
+sample=samples/arco/F#3_ff.wav lokey=f#4 hikey=g#4 pitch_keycenter=f#4
+<region>
+sample=samples/arco/A3_ff.wav lokey=a4 hikey=b4 pitch_keycenter=a4
+<region>
+sample=samples/arco/C4_ff.wav lokey=c5 hikey=d5 pitch_keycenter=c5
+<region>
+sample=samples/arco/D#4_ff.wav lokey=d#5 hikey=f5 pitch_keycenter=d#5
+<region>
+sample=samples/arco/F#4_ff.wav lokey=f#5 hikey=g#5 pitch_keycenter=f#5
+<region>
+sample=samples/arco/A4_ff.wav lokey=a5 hikey=b5 pitch_keycenter=a5
+<region>
+sample=samples/arco/C5_ff.wav lokey=c6 hikey=d6 pitch_keycenter=c6
+<region>
+sample=samples/arco/D#5_ff.wav lokey=d#6 hikey=f6 pitch_keycenter=d#6
+<region>
+sample=samples/arco/F#5_ff.wav lokey=f#6 hikey=g#6 pitch_keycenter=f#6
+<region>
+sample=samples/arco/A5_ff.wav lokey=a6 hikey=b6 pitch_keycenter=a6
+<region>
+sample=samples/arco/C6_ff.wav lokey=c7 hikey=e7 pitch_keycenter=c7
+
+
+//staccato attack layer
+<group>
+sw_lolast=a#0  sw_hilast=a#0
+sw_label=Sustain-velo
+lovel=100 hivel=127
+loop_mode=no_loop
+ampeg_attack=0.02
+ampeg_release=3
+amplitude=20
+tune=-12
+amp_veltrack=0
+amplitude_oncc131=100
+amplitude_curvecc131=9
+
+<region>
+sample=samples/stacc/C1.wav lokey=c1 hikey=d2 pitch_keycenter=c2
+offset=1000
+<region>
+sample=samples/stacc/D#1.wav lokey=d#2 hikey=f2 pitch_keycenter=d#2
+offset=1500
+<region>
+sample=samples/stacc/F#1.wav lokey=f#2 hikey=g#2 pitch_keycenter=f#2
+offset=2500
+<region>
+sample=samples/stacc/A1.wav lokey=a2 hikey=b2 pitch_keycenter=a2
+offset=1000
+<region>
+sample=samples/stacc/C2.wav lokey=c3 hikey=d3 pitch_keycenter=c3
+offset=2500
+<region>
+sample=samples/stacc/D#2.wav lokey=d#3 hikey=f3 pitch_keycenter=d#3
+offset=1000
+<region>
+sample=samples/stacc/F#2.wav lokey=f#3 hikey=g#3 pitch_keycenter=f#3
+offset=1000
+<region>
+sample=samples/stacc/A2.wav lokey=a3 hikey=b3 pitch_keycenter=a3
+offset=1000
+<region>
+sample=samples/stacc/C3.wav lokey=c4 hikey=d4 pitch_keycenter=c4
+offset=1500
+<region>
+sample=samples/stacc/D#3.wav lokey=d#4 hikey=f4 pitch_keycenter=d#4
+offset=3000
+<region>
+sample=samples/stacc/F#3.wav lokey=f#4 hikey=g#4 pitch_keycenter=f#4
+offset=2000
+<region>
+sample=samples/stacc/A3.wav lokey=a4 hikey=b4 pitch_keycenter=a4
+offset=1500
+<region>
+sample=samples/stacc/C4.wav lokey=c5 hikey=d5 pitch_keycenter=c5
+offset=1500
+<region>
+sample=samples/stacc/D#4.wav lokey=d#5 hikey=f5 pitch_keycenter=d#5
+offset=500
+<region>
+sample=samples/stacc/F#4.wav lokey=f#5 hikey=g#5 pitch_keycenter=f#5
+offset=1500
+<region>
+sample=samples/stacc/A4.wav lokey=a5 hikey=b5 pitch_keycenter=a5
+offset=500
+<region>
+sample=samples/stacc/C5.wav lokey=c6 hikey=d6 pitch_keycenter=c6
+offset=500
+<region>
+sample=samples/stacc/D#5.wav lokey=d#6 hikey=f6 pitch_keycenter=d#6
+offset=500
+<region>
+sample=samples/stacc/F#5.wav lokey=f#6 hikey=g#6 pitch_keycenter=f#6
+offset=500
+<region>
+sample=samples/stacc/A5.wav lokey=a6 hikey=b6 pitch_keycenter=a6
+offset=500
+<region>
+sample=samples/stacc/C6.wav lokey=c7 hikey=e7 pitch_keycenter=c7
+offset=1000
+
+
+// ************
+// * Staccato *
+// ************
+
+<group>
+sw_lolast=b0  sw_hilast=b0
+sw_label=Staccato
+loop_mode=one_shot
+ampeg_attack=0.005
+ampeg_sustain=0
+ampeg_decay=1
+ampeg_vel2decay=10
+amp_veltrack=90
+fil_type=lpf_1p
+cutoff=1500
+fil_keytrack=20
+fil_veltrack=9600
+amplitude=80
+tune=-12
+
+<region>
+sample=samples/stacc/C1.wav lokey=c1 hikey=d2 pitch_keycenter=c2
+<region>
+sample=samples/stacc/D#1.wav lokey=d#2 hikey=f2 pitch_keycenter=d#2
+<region>
+sample=samples/stacc/F#1.wav lokey=f#2 hikey=g#2 pitch_keycenter=f#2
+offset=1000
+<region>
+sample=samples/stacc/A1.wav lokey=a2 hikey=b2 pitch_keycenter=a2
+<region>
+sample=samples/stacc/C2.wav lokey=c3 hikey=d3 pitch_keycenter=c3
+offset=1000
+<region>
+sample=samples/stacc/D#2.wav lokey=d#3 hikey=f3 pitch_keycenter=d#3
+<region>
+sample=samples/stacc/F#2.wav lokey=f#3 hikey=g#3 pitch_keycenter=f#3
+<region>
+sample=samples/stacc/A2.wav lokey=a3 hikey=b3 pitch_keycenter=a3
+<region>
+sample=samples/stacc/C3.wav lokey=c4 hikey=d4 pitch_keycenter=c4
+<region>
+sample=samples/stacc/D#3.wav lokey=d#4 hikey=f4 pitch_keycenter=d#4
+offset=1000
+<region>
+sample=samples/stacc/F#3.wav lokey=f#4 hikey=g#4 pitch_keycenter=f#4
+<region>
+sample=samples/stacc/A3.wav lokey=a4 hikey=b4 pitch_keycenter=a4
+<region>
+sample=samples/stacc/C4.wav lokey=c5 hikey=d5 pitch_keycenter=c5
+<region>
+sample=samples/stacc/D#4.wav lokey=d#5 hikey=f5 pitch_keycenter=d#5
+<region>
+sample=samples/stacc/F#4.wav lokey=f#5 hikey=g#5 pitch_keycenter=f#5
+offset=1000
+<region>
+sample=samples/stacc/A4.wav lokey=a5 hikey=b5 pitch_keycenter=a5
+<region>
+sample=samples/stacc/C5.wav lokey=c6 hikey=d6 pitch_keycenter=c6
+<region>
+sample=samples/stacc/D#5.wav lokey=d#6 hikey=f6 pitch_keycenter=d#6
+<region>
+sample=samples/stacc/F#5.wav lokey=f#6 hikey=g#6 pitch_keycenter=f#6
+<region>
+sample=samples/stacc/A5.wav lokey=a6 hikey=b6 pitch_keycenter=a6
+<region>
+sample=samples/stacc/C6.wav lokey=c7 hikey=e7 pitch_keycenter=c7
+
+
+// *****************
+// * Tremolo - CC1 *
+// *****************
+
+<group>
+sw_lolast=a7  sw_hilast=a7
+sw_label=Tremolo-CC1
+ampeg_attack=0.180
+ampeg_vel2attack=-0.172
+ampeg_release=1.4
+ampeg_vel2release=-0.3
+amp_veltrack=0
+offset_cc131=8000
+amplitude_oncc1=100  amplitude_smoothcc1=200  amplitude_curvecc1=7
+fil_type=lpf_1p
+cutoff=4500
+cutoff_oncc1=9600  cutoff_smoothcc1=150
+fil_keytrack=20
+tune=-3
+
+<region>
+sample=samples/trem/G#2.wav lokey=c1 hikey=b1 pitch_keycenter=g#1
+<region>
+sample=samples/trem/E3.wav lokey=c2 hikey=g2 pitch_keycenter=e2
+<region>
+sample=samples/trem/A#3.wav lokey=g#2 hikey=b2 pitch_keycenter=a#2
+<region>
+sample=samples/trem/C#4.wav lokey=c3 hikey=d3 pitch_keycenter=c#3
+<region>
+sample=samples/trem/E4.wav lokey=d#3 hikey=f3 pitch_keycenter=e3
+<region>
+sample=samples/trem/G4.wav lokey=f#3 hikey=g#3 pitch_keycenter=g3
+<region>
+sample=samples/trem/C5.wav lokey=a3 hikey=d4 pitch_keycenter=c4
+<region>
+sample=samples/trem/F5.wav lokey=d#4 hikey=f#4 pitch_keycenter=f4
+<region>
+sample=samples/trem/A5.wav lokey=g4 hikey=b4 pitch_keycenter=a4
+<region>
+sample=samples/trem/C#6.wav lokey=c5 hikey=d5 pitch_keycenter=c#5
+<region>
+sample=samples/trem/E6.wav lokey=d#5 hikey=f5 pitch_keycenter=e5
+<region>
+sample=samples/trem/A6.wav lokey=f#5 hikey=c6 pitch_keycenter=a5
+<region>
+sample=samples/trem/E7.wav lokey=c#6 hikey=g6 pitch_keycenter=e6
+<region>
+sample=samples/trem/C8.wav lokey=g#6 hikey=e7 pitch_keycenter=c7
+
+
+//staccato attack layer
+<group>
+sw_lolast=a7  sw_hilast=a7
+sw_label=Tremolo-CC1
+lovel=100 hivel=127
+loop_mode=no_loop
+ampeg_attack=0.02
+ampeg_release=3
+amplitude=20
+tune=-12
+amp_veltrack=0
+amplitude_oncc131=100
+amplitude_curvecc131=9
+amplitude_oncc1=100  amplitude_smoothcc1=200  amplitude_curvecc1=7
+
+<region>
+sample=samples/stacc/C1.wav lokey=c1 hikey=d2 pitch_keycenter=c2
+offset=1000
+<region>
+sample=samples/stacc/D#1.wav lokey=d#2 hikey=f2 pitch_keycenter=d#2
+offset=1500
+<region>
+sample=samples/stacc/F#1.wav lokey=f#2 hikey=g#2 pitch_keycenter=f#2
+offset=2500
+<region>
+sample=samples/stacc/A1.wav lokey=a2 hikey=b2 pitch_keycenter=a2
+offset=1000
+<region>
+sample=samples/stacc/C2.wav lokey=c3 hikey=d3 pitch_keycenter=c3
+offset=2500
+<region>
+sample=samples/stacc/D#2.wav lokey=d#3 hikey=f3 pitch_keycenter=d#3
+offset=1000
+<region>
+sample=samples/stacc/F#2.wav lokey=f#3 hikey=g#3 pitch_keycenter=f#3
+offset=1000
+<region>
+sample=samples/stacc/A2.wav lokey=a3 hikey=b3 pitch_keycenter=a3
+offset=1000
+<region>
+sample=samples/stacc/C3.wav lokey=c4 hikey=d4 pitch_keycenter=c4
+offset=1500
+<region>
+sample=samples/stacc/D#3.wav lokey=d#4 hikey=f4 pitch_keycenter=d#4
+offset=3000
+<region>
+sample=samples/stacc/F#3.wav lokey=f#4 hikey=g#4 pitch_keycenter=f#4
+offset=2000
+<region>
+sample=samples/stacc/A3.wav lokey=a4 hikey=b4 pitch_keycenter=a4
+offset=1500
+<region>
+sample=samples/stacc/C4.wav lokey=c5 hikey=d5 pitch_keycenter=c5
+offset=1500
+<region>
+sample=samples/stacc/D#4.wav lokey=d#5 hikey=f5 pitch_keycenter=d#5
+offset=500
+<region>
+sample=samples/stacc/F#4.wav lokey=f#5 hikey=g#5 pitch_keycenter=f#5
+offset=1500
+<region>
+sample=samples/stacc/A4.wav lokey=a5 hikey=b5 pitch_keycenter=a5
+offset=500
+<region>
+sample=samples/stacc/C5.wav lokey=c6 hikey=d6 pitch_keycenter=c6
+offset=500
+<region>
+sample=samples/stacc/D#5.wav lokey=d#6 hikey=f6 pitch_keycenter=d#6
+offset=500
+<region>
+sample=samples/stacc/F#5.wav lokey=f#6 hikey=g#6 pitch_keycenter=f#6
+offset=500
+<region>
+sample=samples/stacc/A5.wav lokey=a6 hikey=b6 pitch_keycenter=a6
+offset=500
+<region>
+sample=samples/stacc/C6.wav lokey=c7 hikey=e7 pitch_keycenter=c7
+offset=1000
+
+
+// ***********************************
+// * Tremolo - velocity control only *
+// ***********************************
+
+<group>
+sw_lolast=a#7  sw_hilast=a#7
+sw_label=Tremolo-velo
+ampeg_attack=0.180
+ampeg_vel2attack=-0.172
+ampeg_release=1.4
+ampeg_vel2release=-0.3
+amp_veltrack=0
+offset_cc131=8000
+tune=-3
+amp_veltrack=85
+fil_type=lpf_1p
+cutoff=4500
+fil_keytrack=20
+fil_veltrack=9600
+
+<region>
+sample=samples/trem/G#2.wav lokey=c1 hikey=b1 pitch_keycenter=g#1
+<region>
+sample=samples/trem/E3.wav lokey=c2 hikey=g2 pitch_keycenter=e2
+<region>
+sample=samples/trem/A#3.wav lokey=g#2 hikey=b2 pitch_keycenter=a#2
+<region>
+sample=samples/trem/C#4.wav lokey=c3 hikey=d3 pitch_keycenter=c#3
+<region>
+sample=samples/trem/E4.wav lokey=d#3 hikey=f3 pitch_keycenter=e3
+<region>
+sample=samples/trem/G4.wav lokey=f#3 hikey=g#3 pitch_keycenter=g3
+<region>
+sample=samples/trem/C5.wav lokey=a3 hikey=d4 pitch_keycenter=c4
+<region>
+sample=samples/trem/F5.wav lokey=d#4 hikey=f#4 pitch_keycenter=f4
+<region>
+sample=samples/trem/A5.wav lokey=g4 hikey=b4 pitch_keycenter=a4
+<region>
+sample=samples/trem/C#6.wav lokey=c5 hikey=d5 pitch_keycenter=c#5
+<region>
+sample=samples/trem/E6.wav lokey=d#5 hikey=f5 pitch_keycenter=e5
+<region>
+sample=samples/trem/A6.wav lokey=f#5 hikey=c6 pitch_keycenter=a5
+<region>
+sample=samples/trem/E7.wav lokey=c#6 hikey=g6 pitch_keycenter=e6
+<region>
+sample=samples/trem/C8.wav lokey=g#6 hikey=e7 pitch_keycenter=c7
+
+
+//staccato attack layer
+<group>
+sw_lolast=a#7  sw_hilast=a#7
+sw_label=Tremolo-velo
+lovel=100 hivel=127
+loop_mode=no_loop
+ampeg_attack=0.02
+ampeg_release=3
+amplitude=20
+tune=-12
+amp_veltrack=0
+amplitude_oncc131=100
+amplitude_curvecc131=9
+
+<region>
+sample=samples/stacc/C1.wav lokey=c1 hikey=d2 pitch_keycenter=c2
+offset=1000
+<region>
+sample=samples/stacc/D#1.wav lokey=d#2 hikey=f2 pitch_keycenter=d#2
+offset=1500
+<region>
+sample=samples/stacc/F#1.wav lokey=f#2 hikey=g#2 pitch_keycenter=f#2
+offset=2500
+<region>
+sample=samples/stacc/A1.wav lokey=a2 hikey=b2 pitch_keycenter=a2
+offset=1000
+<region>
+sample=samples/stacc/C2.wav lokey=c3 hikey=d3 pitch_keycenter=c3
+offset=2500
+<region>
+sample=samples/stacc/D#2.wav lokey=d#3 hikey=f3 pitch_keycenter=d#3
+offset=1000
+<region>
+sample=samples/stacc/F#2.wav lokey=f#3 hikey=g#3 pitch_keycenter=f#3
+offset=1000
+<region>
+sample=samples/stacc/A2.wav lokey=a3 hikey=b3 pitch_keycenter=a3
+offset=1000
+<region>
+sample=samples/stacc/C3.wav lokey=c4 hikey=d4 pitch_keycenter=c4
+offset=1500
+<region>
+sample=samples/stacc/D#3.wav lokey=d#4 hikey=f4 pitch_keycenter=d#4
+offset=3000
+<region>
+sample=samples/stacc/F#3.wav lokey=f#4 hikey=g#4 pitch_keycenter=f#4
+offset=2000
+<region>
+sample=samples/stacc/A3.wav lokey=a4 hikey=b4 pitch_keycenter=a4
+offset=1500
+<region>
+sample=samples/stacc/C4.wav lokey=c5 hikey=d5 pitch_keycenter=c5
+offset=1500
+<region>
+sample=samples/stacc/D#4.wav lokey=d#5 hikey=f5 pitch_keycenter=d#5
+offset=500
+<region>
+sample=samples/stacc/F#4.wav lokey=f#5 hikey=g#5 pitch_keycenter=f#5
+offset=1500
+<region>
+sample=samples/stacc/A4.wav lokey=a5 hikey=b5 pitch_keycenter=a5
+offset=500
+<region>
+sample=samples/stacc/C5.wav lokey=c6 hikey=d6 pitch_keycenter=c6
+offset=500
+<region>
+sample=samples/stacc/D#5.wav lokey=d#6 hikey=f6 pitch_keycenter=d#6
+offset=500
+<region>
+sample=samples/stacc/F#5.wav lokey=f#6 hikey=g#6 pitch_keycenter=f#6
+offset=500
+<region>
+sample=samples/stacc/A5.wav lokey=a6 hikey=b6 pitch_keycenter=a6
+offset=500
+<region>
+sample=samples/stacc/C6.wav lokey=c7 hikey=e7 pitch_keycenter=c7
+offset=1000
+
+
+// **************************************
+// * Sustained/Tremolo Split - CC1 & 67 *
+// **************************************
+
+// sustained
+// pp
+<group>
+sw_lolast=b7  sw_hilast=b7
+sw_label=Sustain/Tremolo-CC1 & 67
+ampeg_attack=0.180
+ampeg_vel2attack=-0.172
+ampeg_release=1.4
+ampeg_vel2release=-0.3
+amp_veltrack=0
+offset_cc131=12000
+amplitude_oncc1=100  amplitude_smoothcc1=200  amplitude_curvecc1=8
+tune=-3
+xfout_locc67=5
+xfout_hicc67=127
+
+<region>
+sample=samples/arco/C0_pp.wav lokey=c1 hikey=d1 pitch_keycenter=c1
+<region>
+sample=samples/arco/D#0_pp.wav lokey=d#1 hikey=f1 pitch_keycenter=d#1
+<region>
+sample=samples/arco/F#0_pp.wav lokey=f#1 hikey=g#1 pitch_keycenter=f#1
+<region>
+sample=samples/arco/A0_pp.wav lokey=a1 hikey=b1 pitch_keycenter=a1
+<region>
+sample=samples/arco/C1_pp.wav lokey=c2 hikey=d2 pitch_keycenter=c2
+<region>
+sample=samples/arco/D#1_pp.wav lokey=d#2 hikey=f2 pitch_keycenter=d#2
+<region>
+sample=samples/arco/F#1_pp.wav lokey=f#2 hikey=g#2 pitch_keycenter=f#2
+<region>
+sample=samples/arco/A1_pp.wav lokey=a2 hikey=b2 pitch_keycenter=a2
+<region>
+sample=samples/arco/C2_pp.wav lokey=c3 hikey=d3 pitch_keycenter=c3
+<region>
+sample=samples/arco/D#2_pp.wav lokey=d#3 hikey=f3 pitch_keycenter=d#3
+<region>
+sample=samples/arco/F#2_pp.wav lokey=f#3 hikey=g#3 pitch_keycenter=f#3
+<region>
+sample=samples/arco/A2_pp.wav lokey=a3 hikey=b3 pitch_keycenter=a3
+<region>
+sample=samples/arco/C3_pp.wav lokey=c4 hikey=d4 pitch_keycenter=c4
+<region>
+sample=samples/arco/D#3_pp.wav lokey=d#4 hikey=f4 pitch_keycenter=d#4
+<region>
+sample=samples/arco/F#3_pp.wav lokey=f#4 hikey=g#4 pitch_keycenter=f#4
+<region>
+sample=samples/arco/A3_pp.wav lokey=a4 hikey=b4 pitch_keycenter=a4
+<region>
+sample=samples/arco/C4_pp.wav lokey=c5 hikey=d5 pitch_keycenter=c5
+<region>
+sample=samples/arco/D#4_pp.wav lokey=d#5 hikey=f5 pitch_keycenter=d#5
+<region>
+sample=samples/arco/F#4_pp.wav lokey=f#5 hikey=g#5 pitch_keycenter=f#5
+<region>
+sample=samples/arco/A4_pp.wav lokey=a5 hikey=b5 pitch_keycenter=a5
+<region>
+sample=samples/arco/C5_pp.wav lokey=c6 hikey=d6 pitch_keycenter=c6
+<region>
+sample=samples/arco/D#5_pp.wav lokey=d#6 hikey=f6 pitch_keycenter=d#6
+<region>
+sample=samples/arco/F#5_pp.wav lokey=f#6 hikey=g#6 pitch_keycenter=f#6
+<region>
+sample=samples/arco/A5_pp.wav lokey=a6 hikey=b6 pitch_keycenter=a6
+<region>
+sample=samples/arco/C6_pp.wav lokey=c7 hikey=e7 pitch_keycenter=c7
+
+
+// ff
+<group>
+sw_lolast=b7  sw_hilast=b7
+sw_label=Sustain/Tremolo-CC1 & 67
+ampeg_attack=0.180
+ampeg_vel2attack=-0.172
+ampeg_release=1.4
+ampeg_vel2release=-0.3
+amp_veltrack=0
+offset_cc131=12000
+amplitude_oncc1=100  amplitude_smoothcc1=200  amplitude_curvecc1=9
+tune=-3
+xfout_locc67=5
+xfout_hicc67=127
+
+<region>
+sample=samples/arco/C0_ff.wav lokey=c1 hikey=d1 pitch_keycenter=c1
+<region>
+sample=samples/arco/D#0_ff.wav lokey=d#1 hikey=f1 pitch_keycenter=d#1
+<region>
+sample=samples/arco/F#0_ff.wav lokey=f#1 hikey=g#1 pitch_keycenter=f#1
+<region>
+sample=samples/arco/A0_ff.wav lokey=a1 hikey=b1 pitch_keycenter=a1
+<region>
+sample=samples/arco/C1_ff.wav lokey=c2 hikey=d2 pitch_keycenter=c2
+<region>
+sample=samples/arco/D#1_ff.wav lokey=d#2 hikey=f2 pitch_keycenter=d#2
+<region>
+sample=samples/arco/F#1_ff.wav lokey=f#2 hikey=g#2 pitch_keycenter=f#2
+<region>
+sample=samples/arco/A1_ff.wav lokey=a2 hikey=b2 pitch_keycenter=a2
+<region>
+sample=samples/arco/C2_ff.wav lokey=c3 hikey=d3 pitch_keycenter=c3
+<region>
+sample=samples/arco/D#2_ff.wav lokey=d#3 hikey=f3 pitch_keycenter=d#3
+<region>
+sample=samples/arco/F#2_ff.wav lokey=f#3 hikey=g#3 pitch_keycenter=f#3
+<region>
+sample=samples/arco/A2_ff.wav lokey=a3 hikey=b3 pitch_keycenter=a3
+<region>
+sample=samples/arco/C3_ff.wav lokey=c4 hikey=d4 pitch_keycenter=c4
+<region>
+sample=samples/arco/D#3_ff.wav lokey=d#4 hikey=f4 pitch_keycenter=d#4
+<region>
+sample=samples/arco/F#3_ff.wav lokey=f#4 hikey=g#4 pitch_keycenter=f#4
+<region>
+sample=samples/arco/A3_ff.wav lokey=a4 hikey=b4 pitch_keycenter=a4
+<region>
+sample=samples/arco/C4_ff.wav lokey=c5 hikey=d5 pitch_keycenter=c5
+<region>
+sample=samples/arco/D#4_ff.wav lokey=d#5 hikey=f5 pitch_keycenter=d#5
+<region>
+sample=samples/arco/F#4_ff.wav lokey=f#5 hikey=g#5 pitch_keycenter=f#5
+<region>
+sample=samples/arco/A4_ff.wav lokey=a5 hikey=b5 pitch_keycenter=a5
+<region>
+sample=samples/arco/C5_ff.wav lokey=c6 hikey=d6 pitch_keycenter=c6
+<region>
+sample=samples/arco/D#5_ff.wav lokey=d#6 hikey=f6 pitch_keycenter=d#6
+<region>
+sample=samples/arco/F#5_ff.wav lokey=f#6 hikey=g#6 pitch_keycenter=f#6
+<region>
+sample=samples/arco/A5_ff.wav lokey=a6 hikey=b6 pitch_keycenter=a6
+<region>
+sample=samples/arco/C6_ff.wav lokey=c7 hikey=e7 pitch_keycenter=c7
+
+
+//staccato attack layer
+<group>
+sw_lolast=b7  sw_hilast=b7
+sw_label=Sustain/Tremolo-CC1 & 67
+loop_mode=no_loop
+ampeg_attack=0.02
+ampeg_release=3
+amplitude=47
+amplitude_oncc1=100  amplitude_smoothcc1=200  amplitude_curvecc1=10
+tune=-12
+
+<region>
+sample=samples/stacc/C1.wav lokey=c1 hikey=d2 pitch_keycenter=c2
+offset=1000
+<region>
+sample=samples/stacc/D#1.wav lokey=d#2 hikey=f2 pitch_keycenter=d#2
+offset=1500
+<region>
+sample=samples/stacc/F#1.wav lokey=f#2 hikey=g#2 pitch_keycenter=f#2
+offset=2500
+<region>
+sample=samples/stacc/A1.wav lokey=a2 hikey=b2 pitch_keycenter=a2
+offset=1000
+<region>
+sample=samples/stacc/C2.wav lokey=c3 hikey=d3 pitch_keycenter=c3
+offset=2500
+<region>
+sample=samples/stacc/D#2.wav lokey=d#3 hikey=f3 pitch_keycenter=d#3
+offset=1000
+<region>
+sample=samples/stacc/F#2.wav lokey=f#3 hikey=g#3 pitch_keycenter=f#3
+offset=1000
+<region>
+sample=samples/stacc/A2.wav lokey=a3 hikey=b3 pitch_keycenter=a3
+offset=1000
+<region>
+sample=samples/stacc/C3.wav lokey=c4 hikey=d4 pitch_keycenter=c4
+offset=1500
+<region>
+sample=samples/stacc/D#3.wav lokey=d#4 hikey=f4 pitch_keycenter=d#4
+offset=3000
+<region>
+sample=samples/stacc/F#3.wav lokey=f#4 hikey=g#4 pitch_keycenter=f#4
+offset=2000
+<region>
+sample=samples/stacc/A3.wav lokey=a4 hikey=b4 pitch_keycenter=a4
+offset=1500
+<region>
+sample=samples/stacc/C4.wav lokey=c5 hikey=d5 pitch_keycenter=c5
+offset=1500
+<region>
+sample=samples/stacc/D#4.wav lokey=d#5 hikey=f5 pitch_keycenter=d#5
+offset=500
+<region>
+sample=samples/stacc/F#4.wav lokey=f#5 hikey=g#5 pitch_keycenter=f#5
+offset=1500
+<region>
+sample=samples/stacc/A4.wav lokey=a5 hikey=b5 pitch_keycenter=a5
+offset=500
+<region>
+sample=samples/stacc/C5.wav lokey=c6 hikey=d6 pitch_keycenter=c6
+offset=500
+<region>
+sample=samples/stacc/D#5.wav lokey=d#6 hikey=f6 pitch_keycenter=d#6
+offset=500
+<region>
+sample=samples/stacc/F#5.wav lokey=f#6 hikey=g#6 pitch_keycenter=f#6
+offset=500
+<region>
+sample=samples/stacc/A5.wav lokey=a6 hikey=b6 pitch_keycenter=a6
+offset=500
+<region>
+sample=samples/stacc/C6.wav lokey=c7 hikey=e7 pitch_keycenter=c7
+offset=1000
+
+
+// Tremolo (activated by soft pedal--CC 67)
+// pp
+<group>
+sw_lolast=b7  sw_hilast=b7
+sw_label=Sustain/Tremolo-CC1 & 67
+ampeg_attack=0.180
+ampeg_vel2attack=-0.172
+ampeg_release=1.4
+ampeg_vel2release=-0.3
+amp_veltrack=0
+offset_cc131=8000
+amplitude_oncc1=100  amplitude_smoothcc1=200  amplitude_curvecc1=7
+tune=-3
+xfin_locc67=5
+xfin_hicc67=127
+
+<region>
+sample=samples/trem/G#2.wav lokey=c1 hikey=b1 pitch_keycenter=g#1
+<region>
+sample=samples/trem/E3.wav lokey=c2 hikey=g2 pitch_keycenter=e2
+<region>
+sample=samples/trem/A#3.wav lokey=g#2 hikey=b2 pitch_keycenter=a#2
+<region>
+sample=samples/trem/C#4.wav lokey=c3 hikey=d3 pitch_keycenter=c#3
+<region>
+sample=samples/trem/E4.wav lokey=d#3 hikey=f3 pitch_keycenter=e3
+<region>
+sample=samples/trem/G4.wav lokey=f#3 hikey=g#3 pitch_keycenter=g3
+<region>
+sample=samples/trem/C5.wav lokey=a3 hikey=d4 pitch_keycenter=c4
+<region>
+sample=samples/trem/F5.wav lokey=d#4 hikey=f#4 pitch_keycenter=f4
+<region>
+sample=samples/trem/A5.wav lokey=g4 hikey=b4 pitch_keycenter=a4
+<region>
+sample=samples/trem/C#6.wav lokey=c5 hikey=d5 pitch_keycenter=c#5
+<region>
+sample=samples/trem/E6.wav lokey=d#5 hikey=f5 pitch_keycenter=e5
+<region>
+sample=samples/trem/A6.wav lokey=f#5 hikey=c6 pitch_keycenter=a5
+<region>
+sample=samples/trem/E7.wav lokey=c#6 hikey=g6 pitch_keycenter=e6
+<region>
+sample=samples/trem/C8.wav lokey=g#6 hikey=e7 pitch_keycenter=c7
+
+
+// *************
+// * Pizzicato *
+// *************
+
+// pp
+<group>
+sw_lolast=c8  sw_hilast=c8
+sw_label=Pizzicato
+lovel=0 hivel=55
+loop_mode=one_shot
+ampeg_sustain=0
+ampeg_decay=1
+ampeg_vel2decay=10
+amp_veltrack=80
+amplitude=92
+tune=-10
+
+<region>
+sample=samples/pizz/C1_pp.wav lokey=c1 hikey=d2 pitch_keycenter=c2
+<region>
+sample=samples/pizz/D#1_pp.wav lokey=d#2 hikey=f2 pitch_keycenter=d#2
+<region>
+sample=samples/pizz/F#1_pp.wav lokey=f#2 hikey=g#2 pitch_keycenter=f#2
+<region>
+sample=samples/pizz/A1_pp.wav lokey=a2 hikey=b2 pitch_keycenter=a2
+<region>
+sample=samples/pizz/C2_pp.wav lokey=c3 hikey=d3 pitch_keycenter=c3
+<region>
+sample=samples/pizz/D#2_pp.wav lokey=d#3 hikey=f3 pitch_keycenter=d#3
+<region>
+sample=samples/pizz/F#2_pp.wav lokey=f#3 hikey=g#3 pitch_keycenter=f#3
+<region>
+sample=samples/pizz/A2_pp.wav lokey=a3 hikey=b3 pitch_keycenter=a3
+<region>
+sample=samples/pizz/C3_pp.wav lokey=c4 hikey=d4 pitch_keycenter=c4
+<region>
+sample=samples/pizz/D#3_pp.wav lokey=d#4 hikey=f4 pitch_keycenter=d#4
+<region>
+sample=samples/pizz/F#3_pp.wav lokey=f#4 hikey=g#4 pitch_keycenter=f#4
+<region>
+sample=samples/pizz/A3_pp.wav lokey=a4 hikey=b4 pitch_keycenter=a4
+<region>
+sample=samples/pizz/C4_pp.wav lokey=c5 hikey=d5 pitch_keycenter=c5
+<region>
+sample=samples/pizz/D#4_pp.wav lokey=d#5 hikey=f5 pitch_keycenter=d#5
+<region>
+sample=samples/pizz/F#4_pp.wav lokey=f#5 hikey=g#5 pitch_keycenter=f#5
+<region>
+sample=samples/pizz/A4_pp.wav lokey=a5 hikey=b5 pitch_keycenter=a5
+<region>
+sample=samples/pizz/C5_pp.wav lokey=c6 hikey=d7 pitch_keycenter=c6
+
+
+// mf
+<group>
+sw_lolast=c8  sw_hilast=c8
+sw_label=Pizzicato
+lovel=56 hivel=127
+loop_mode=one_shot
+ampeg_sustain=0
+ampeg_decay=1
+ampeg_vel2decay=10
+amp_veltrack=80
+amplitude=92
+tune=-10
+
+<region>
+sample=samples/pizz/C1_mf.wav lokey=c1 hikey=d2 pitch_keycenter=c2
+<region>
+sample=samples/pizz/D#1_mf.wav lokey=d#2 hikey=f2 pitch_keycenter=d#2
+<region>
+sample=samples/pizz/F#1_mf.wav lokey=f#2 hikey=g#2 pitch_keycenter=f#2
+<region>
+sample=samples/pizz/A1_mf.wav lokey=a2 hikey=b2 pitch_keycenter=a2
+<region>
+sample=samples/pizz/C2_mf.wav lokey=c3 hikey=d3 pitch_keycenter=c3
+<region>
+sample=samples/pizz/D#2_mf.wav lokey=d#3 hikey=f3 pitch_keycenter=d#3
+<region>
+sample=samples/pizz/F#2_mf.wav lokey=f#3 hikey=g#3 pitch_keycenter=f#3
+<region>
+sample=samples/pizz/A2_mf.wav lokey=a3 hikey=b3 pitch_keycenter=a3
+<region>
+sample=samples/pizz/C3_mf.wav lokey=c4 hikey=d4 pitch_keycenter=c4
+<region>
+sample=samples/pizz/D#3_mf.wav lokey=d#4 hikey=f4 pitch_keycenter=d#4
+<region>
+sample=samples/pizz/F#3_mf.wav lokey=f#4 hikey=g#4 pitch_keycenter=f#4
+<region>
+sample=samples/pizz/A3_mf.wav lokey=a4 hikey=b4 pitch_keycenter=a4
+<region>
+sample=samples/pizz/C4_mf.wav lokey=c5 hikey=d5 pitch_keycenter=c5
+<region>
+sample=samples/pizz/D#4_mf.wav lokey=d#5 hikey=f5 pitch_keycenter=d#5
+<region>
+sample=samples/pizz/F#4_mf.wav lokey=f#5 hikey=g#5 pitch_keycenter=f#5
+<region>
+sample=samples/pizz/A4_mf.wav lokey=a5 hikey=b5 pitch_keycenter=a5
+<region>
+sample=samples/pizz/C5_mf.wav lokey=c6 hikey=d7 pitch_keycenter=c6
+
+
+// **************************
+// * Custom velocity curves *
+// **************************
+
+<curve>  curve_index=7
+  v000=0.0428512
+  v127=1
+<curve>  curve_index=8
+  v000=0.0428512
+  v060=0.4950475
+  v127=0
+<curve>  curve_index=9
+  v000=0
+  v060=0
+  v127=1
+<curve>  curve_index=10
+  v000=0
+  v020=0
+  v080=0.3
+  v127=1

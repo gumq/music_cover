@@ -1,0 +1,186 @@
+# gui.py
+import tkinter as tk
+from tkinter import filedialog, messagebox
+import subprocess
+import os
+import sys
+import json
+from pathlib import Path
+
+CONFIG_PATH = Path.home() / ".music_cover_config.json"
+
+def load_config():
+    if CONFIG_PATH.exists():
+        try:
+            return json.loads(CONFIG_PATH.read_text(encoding="utf-8"))
+        except Exception:
+            return {}
+    return {}
+
+def save_config(cfg):
+    try:
+        CONFIG_PATH.write_text(json.dumps(cfg, ensure_ascii=False, indent=2), encoding="utf-8")
+    except Exception:
+        pass
+
+cfg = load_config()
+last_dir = cfg.get("last_dir", str(Path.cwd()))
+
+def browse_file(entry, filetypes, title="Chọn file"):
+    filename = filedialog.askopenfilename(
+        title=title,
+        filetypes=filetypes,
+        initialdir=last_dir if os.path.isdir(last_dir) else None
+    )
+    if filename:
+        entry.delete(0, tk.END)
+        entry.insert(0, filename)
+        # Cập nhật last_dir
+        cfg["last_dir"] = os.path.dirname(filename)
+        save_config(cfg)
+
+        # Nếu chọn input audio và ô output trống -> gợi ý tên mp4 trong cùng thư mục
+        if entry is audio_entry and not output_entry.get().strip():
+            base = os.path.splitext(os.path.basename(filename))[0]
+            suggested = os.path.join(cfg["last_dir"], f"{base}_cover.mp4")
+            output_entry.delete(0, tk.END)
+            output_entry.insert(0, suggested)
+
+def browse_save_file(entry):
+    filename = filedialog.asksaveasfilename(
+        title="Chọn nơi lưu MP4",
+        defaultextension=".mp4",
+        filetypes=[("MP4 files", "*.mp4")],
+        initialdir=last_dir if os.path.isdir(last_dir) else None
+    )
+    if filename:
+        entry.delete(0, tk.END)
+        entry.insert(0, filename)
+        cfg["last_dir"] = os.path.dirname(filename)
+        save_config(cfg)
+
+def create_video():
+    input_audio = audio_entry.get().strip()
+    image = image_entry.get().strip()
+    output = output_entry.get().strip()
+    rain_file = rain_entry.get().strip()
+    pitch = pitch_entry.get().strip()
+    tempo = tempo_entry.get().strip()
+    reverb = reverb_var.get()
+    mode = mode_var.get()
+    loop_hours = loop_entry.get().strip()
+    rain_db = rain_db_entry.get().strip()
+    volume = volume_entry.get().strip()
+    resolution = res_entry.get().strip()
+
+    if not input_audio or not image or not output:
+        messagebox.showerror("Lỗi", "Vui lòng chọn đầy đủ: âm thanh, ảnh và file xuất.")
+        return
+
+    cmd = [
+        sys.executable, "app.py",
+        "--input_audio", input_audio,
+        "--image", image,
+        "--output", output,
+        "--mode", mode
+    ]
+
+    if rain_file:
+        cmd.extend(["--rain", rain_file])
+    if rain_db:
+        cmd.extend(["--rain_db", rain_db])
+    if reverb:
+        cmd.append("--reverb")
+    if pitch:
+        cmd.extend(["--pitch", pitch])
+    if tempo:
+        cmd.extend(["--tempo", tempo])
+    if volume:
+        cmd.extend(["--volume", volume])
+    if resolution:
+        cmd.extend(["--resolution", resolution])
+    if mode == "loop" and loop_hours:
+        cmd.extend(["--loop_hours", loop_hours])
+
+    try:
+        # Hiện console log trong terminal đang mở; nếu muốn hiện log vào GUI thì thay Popen + đọc stdout.
+        subprocess.run(cmd, check=True)
+        messagebox.showinfo("Thành công", f"Video đã được tạo:\n{output}")
+        # Lưu last_dir là thư mục output
+        cfg["last_dir"] = os.path.dirname(output)
+        save_config(cfg)
+    except subprocess.CalledProcessError as e:
+        messagebox.showerror("Lỗi", f"Quá trình tạo video thất bại.\n\nLệnh:\n{' '.join(cmd)}\n\nChi tiết:\n{e}")
+
+root = tk.Tk()
+root.title("Tạo Video từ Ảnh và Nhạc (Demucs)")
+
+# Hàng 0: Audio
+tk.Label(root, text="File âm thanh:").grid(row=0, column=0, sticky="e", padx=6, pady=4)
+audio_entry = tk.Entry(root, width=54)
+audio_entry.grid(row=0, column=1, padx=6, pady=4)
+tk.Button(root, text="Chọn", command=lambda: browse_file(audio_entry, [("Audio Files", "*.mp3 *.wav *.flac *.ogg")], "Chọn file âm thanh")).grid(row=0, column=2, padx=6, pady=4)
+
+# Hàng 1: Ảnh
+tk.Label(root, text="File ảnh:").grid(row=1, column=0, sticky="e", padx=6, pady=4)
+image_entry = tk.Entry(root, width=54)
+image_entry.grid(row=1, column=1, padx=6, pady=4)
+tk.Button(root, text="Chọn", command=lambda: browse_file(image_entry, [("Image Files", "*.jpg *.jpeg *.png")], "Chọn ảnh nền")).grid(row=1, column=2, padx=6, pady=4)
+
+# Hàng 2: Tiếng mưa (tùy chọn)
+tk.Label(root, text="File tiếng mưa (tuỳ chọn):").grid(row=2, column=0, sticky="e", padx=6, pady=4)
+rain_entry = tk.Entry(root, width=54)
+rain_entry.grid(row=2, column=1, padx=6, pady=4)
+tk.Button(root, text="Chọn", command=lambda: browse_file(rain_entry, [("Audio Files", "*.mp3 *.wav *.flac *.ogg")], "Chọn file tiếng mưa")).grid(row=2, column=2, padx=6, pady=4)
+
+# Hàng 3: File xuất
+tk.Label(root, text="File xuất (.mp4):").grid(row=3, column=0, sticky="e", padx=6, pady=4)
+output_entry = tk.Entry(root, width=54)
+output_entry.grid(row=3, column=1, padx=6, pady=4)
+tk.Button(root, text="Chọn", command=lambda: browse_save_file(output_entry)).grid(row=3, column=2, padx=6, pady=4)
+
+# Hàng 4: Pitch / Tempo
+tk.Label(root, text="Pitch (±semitones):").grid(row=4, column=0, sticky="e", padx=6, pady=4)
+pitch_entry = tk.Entry(root, width=10)
+pitch_entry.insert(0, "0.0")
+pitch_entry.grid(row=4, column=1, sticky="w", padx=6, pady=4)
+
+tk.Label(root, text="Tempo (1.0=bt):").grid(row=4, column=1, sticky="e", padx=6, pady=4)
+tempo_entry = tk.Entry(root, width=10)
+tempo_entry.insert(0, "1.0")
+tempo_entry.grid(row=4, column=1, sticky="e", padx=120, pady=4)  # căn bên phải một chút
+
+# Hàng 5: Volume / Rain dB
+tk.Label(root, text="Volume (1.0=bt):").grid(row=5, column=0, sticky="e", padx=6, pady=4)
+volume_entry = tk.Entry(root, width=10)
+volume_entry.insert(0, "1.0")
+volume_entry.grid(row=5, column=1, sticky="w", padx=6, pady=4)
+
+tk.Label(root, text="Rain dB (âm<0):").grid(row=5, column=1, sticky="e", padx=6, pady=4)
+rain_db_entry = tk.Entry(root, width=10)
+rain_db_entry.insert(0, "-18.0")
+rain_db_entry.grid(row=5, column=1, sticky="e", padx=120, pady=4)
+
+# Hàng 6: Reverb / Resolution
+reverb_var = tk.BooleanVar()
+tk.Checkbutton(root, text="Hiệu ứng vang (reverb)", variable=reverb_var).grid(row=6, column=1, sticky="w", padx=6, pady=4)
+
+tk.Label(root, text="Độ phân giải (WxH):").grid(row=6, column=0, sticky="e", padx=6, pady=4)
+res_entry = tk.Entry(root, width=12)
+res_entry.insert(0, "1920x1080")
+res_entry.grid(row=6, column=1, sticky="w", padx=120, pady=4)
+
+# Hàng 7: Chế độ / Loop
+tk.Label(root, text="Chế độ:").grid(row=7, column=0, sticky="e", padx=6, pady=4)
+mode_var = tk.StringVar(value="full")
+tk.OptionMenu(root, mode_var, "full", "loop").grid(row=7, column=1, sticky="w", padx=6, pady=4)
+
+tk.Label(root, text="Loop giờ:").grid(row=7, column=1, sticky="e", padx=6, pady=4)
+loop_entry = tk.Entry(root, width=10)
+loop_entry.insert(0, "1")
+loop_entry.grid(row=7, column=1, sticky="e", padx=120, pady=4)
+
+# Hàng 8: Nút
+tk.Button(root, text="Tạo video", command=create_video, bg="lightblue").grid(row=8, column=1, pady=12)
+
+root.mainloop()

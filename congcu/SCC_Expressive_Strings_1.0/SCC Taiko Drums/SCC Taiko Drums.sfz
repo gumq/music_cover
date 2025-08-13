@@ -1,0 +1,337 @@
+// ------------------------------
+//      SCC Taiko Drums v1.0
+//     by S. Christian Collins
+//    www.schristiancollins.com
+// ------------------------------
+
+// ------------------------------
+//           Taiko 1
+// ------------------------------
+
+<group>
+//loop_mode=one_shot
+ampeg_release=5
+pitch_keytrack=0
+lokey=c2 hikey=c#2 pitch_keycenter=c2
+
+<region>
+sample=Samples\Taiko Drum Hit 1-15.wav lovel=1 hivel=74 seq_position=1 seq_length=2
+<region>
+sample=Samples\Taiko Drum Hit 1-16.wav lovel=1 hivel=74 seq_position=2 seq_length=2
+<region>
+sample=Samples\Taiko Drum Hit 1-27.wav lovel=75 hivel=127 seq_position=1 seq_length=3
+<region>
+sample=Samples\Taiko Drum Hit 1-28.wav lovel=75 hivel=127 seq_position=2 seq_length=3
+<region>
+sample=Samples\Taiko Drum Hit 2-6.wav lovel=75 hivel=127 seq_position=3 seq_length=3
+
+
+// ------------------------------
+//           Taiko 2
+// ------------------------------
+
+<group>
+//loop_mode=one_shot
+ampeg_release=5
+pitch_keytrack=0
+lokey=d2 hikey=d#2 pitch_keycenter=d2
+
+<region>
+sample=Samples\Taiko Drum Hit 2-2.wav lovel=1 hivel=74 seq_position=1 seq_length=2
+<region>
+sample=Samples\Taiko Drum Hit 1-25.wav lovel=1 hivel=74 seq_position=2 seq_length=2
+<region>
+sample=Samples\Taiko Drum Hit 1-18.wav lovel=75 hivel=127 seq_position=1 seq_length=2
+<region>
+sample=Samples\Taiko Drum Hit 2-7.wav lovel=75 hivel=127 seq_position=2 seq_length=2
+<region>
+sample=Samples\Taiko Drum Hit 2-5.wav lovel=105 hivel=127 amp_veltrack=100
+
+
+// ------------------------------
+//           Taiko 3
+// ------------------------------
+
+<group>
+//loop_mode=one_shot
+ampeg_release=5
+pitch_keytrack=0
+lokey=f2 hikey=f#2 pitch_keycenter=f2
+
+<region>
+sample=Samples\Taiko Drum Hit 1-23.wav lovel=1 hivel=49
+<region>
+sample=Samples\Taiko Drum Hit 1-19.wav lovel=50 hivel=92
+<region>
+sample=Samples\Taiko Drum Hit 1-17.wav lovel=93 hivel=127
+
+
+// ------------------------------
+//           Taiko 4
+// ------------------------------
+
+<group>
+//loop_mode=one_shot
+ampeg_release=5
+pitch_keytrack=0
+lokey=g2 hikey=g#2 pitch_keycenter=g2
+
+<region>
+sample=Samples\Taiko Drum Hit 2-4.wav lovel=1 hivel=38
+<region>
+sample=Samples\Taiko Drum Hit 2-0.wav lovel=39 hivel=69
+<region>
+sample=Samples\Taiko Drum Hit 2-1.wav lovel=70 hivel=99
+<region>
+sample=Samples\Taiko Drum Hit 2-3.wav lovel=100 hivel=127
+
+
+// ------------------------------
+//           Taiko 5
+// ------------------------------
+
+<group>
+//loop_mode=one_shot
+ampeg_release=5
+pitch_keytrack=0
+lokey=a2 hikey=a#2 pitch_keycenter=a2
+
+<region>
+sample=Samples\Taiko Drum Hit 3-4.wav lovel=1 hivel=38
+<region>
+sample=Samples\Taiko Drum Hit 3-3.wav lovel=39 hivel=60
+<region>
+sample=Samples\Taiko Drum Hit 3-2.wav lovel=61 hivel=82
+<region>
+sample=Samples\Taiko Drum Hit 3-1.wav lovel=83 hivel=103
+<region>
+sample=Samples\Taiko Drum Hit 3-0.wav lovel=104 hivel=127
+
+
+// ------------------------------
+//           Taiko 6
+// ------------------------------
+
+<group>
+//loop_mode=one_shot
+ampeg_release=5
+pitch_keytrack=0
+lokey=c3 hikey=c#3 pitch_keycenter=c3
+
+<region>
+sample=Samples\Taiko Drum 4-4.wav lovel=1 hivel=38
+<region>
+sample=Samples\Taiko Drum 4-3.wav lovel=39 hivel=60
+<region>
+sample=Samples\Taiko Drum 4-2.wav lovel=61 hivel=82
+<region>
+sample=Samples\Taiko Drum 4-1.wav lovel=83 hivel=103
+<region>
+sample=Samples\Taiko Drum 4-0.wav lovel=104 hivel=127
+
+
+// ------------------------------
+//           Taiko 7
+// ------------------------------
+
+<group>
+//loop_mode=one_shot
+ampeg_release=5
+pitch_keytrack=0
+lokey=d3 hikey=d#3 pitch_keycenter=d3
+
+<region>
+sample=Samples\Taiko Drum 5-3.wav lovel=1 hivel=38
+fil_type=lpf_1p
+cutoff=4500
+fil_veltrack=100
+
+<region>
+sample=Samples\Taiko Drum 5-3.wav lovel=39 hivel=60
+<region>
+sample=Samples\Taiko Drum 5-2.wav lovel=61 hivel=82
+<region>
+sample=Samples\Taiko Drum 5-1.wav lovel=83 hivel=103
+<region>
+sample=Samples\Taiko Drum 5-0.wav lovel=104 hivel=127
+
+
+// ------------------------------
+//           Taiko 8
+// ------------------------------
+
+<group>
+//loop_mode=one_shot
+ampeg_release=5
+pitch_keytrack=0
+lokey=f3 hikey=f#3 pitch_keycenter=f3
+
+<region>
+sample=Samples\Taiko Drum 6-3.wav lovel=1 hivel=38
+<region>
+sample=Samples\Taiko Drum 6-4.wav lovel=39 hivel=60
+<region>
+sample=Samples\Taiko Drum 6-0.wav lovel=61 hivel=82
+<region>
+sample=Samples\Taiko Drum 6-1.wav lovel=83 hivel=103
+<region>
+sample=Samples\Taiko Drum 6-2.wav lovel=104 hivel=127
+
+
+// ------------------------------
+//           Taiko 9
+// ------------------------------
+
+<group>
+//loop_mode=one_shot
+ampeg_release=5
+pitch_keytrack=0
+lokey=g3 hikey=g#3 pitch_keycenter=g3
+
+<region>
+sample=Samples\Taiko Hit-0.wav lovel=1 hivel=49
+<region>
+sample=Samples\Taiko Hit-1.wav lovel=50 hivel=92
+<region>
+sample=Samples\Taiko Hit-2.wav lovel=93 hivel=127
+
+
+// ------------------------------
+//         Taiko Crash
+// ------------------------------
+
+<group>
+//loop_mode=one_shot
+ampeg_release=5
+pitch_keytrack=0
+lokey=a3 hikey=a#3 pitch_keycenter=a3
+
+<region>
+sample=Samples\Taiko Crash (Freeze)-4.wav lovel=1 hivel=29
+<region>
+sample=Samples\Taiko Crash (Freeze)-1.wav lovel=30 hivel=53
+<region>
+sample=Samples\Taiko Crash (Freeze)-0.wav lovel=54 hivel=77
+<region>
+sample=Samples\Taiko Crash (Freeze)-3.wav lovel=78 hivel=101
+<region>
+sample=Samples\Taiko Crash (Freeze)-2.wav lovel=102 hivel=127
+
+
+// ------------------------------
+//           Taiko 10
+// ------------------------------
+
+<group>
+loop_mode=no_loop
+ampeg_release=5
+pitch_keytrack=0
+lokey=c4 hikey=c#4 pitch_keycenter=c4
+fil_type=lpf_1p
+cutoff=100
+fil_veltrack=9600
+
+<region>
+sample=Samples\Taiko C5.wav
+
+
+// ------------------------------
+//           Taiko 11
+// ------------------------------
+
+<group>
+//loop_mode=one_shot
+ampeg_release=5
+pitch_keytrack=0
+lokey=d4 hikey=d#4 pitch_keycenter=d4
+
+<region>
+sample=Samples\taiko1-p.wav lovel=1 hivel=79 seq_position=1 seq_length=2 volume=-3
+<region>
+sample=Samples\taiko1-m.wav lovel=1 hivel=79 seq_position=2 seq_length=2 volume=-3
+<region>
+sample=Samples\taiko1-f1.wav lovel=80 hivel=127 seq_position=1 seq_length=2
+<region>
+sample=Samples\taiko1-f2.wav lovel=80 hivel=127 seq_position=2 seq_length=2
+
+
+// ------------------------------
+//         Taikos 10+11
+// ------------------------------
+
+<group>
+loop_mode=no_loop
+ampeg_release=5
+pitch_keytrack=0
+lokey=f4 hikey=f#4 pitch_keycenter=f4
+
+
+<region>
+sample=Samples\Taiko C5.wav
+fil_type=lpf_1p
+cutoff=100
+fil_veltrack=9600
+
+<group>
+//loop_mode=one_shot
+ampeg_release=5
+pitch_keytrack=0
+lokey=f4 hikey=f#4 pitch_keycenter=f4
+
+<region>
+sample=Samples\taiko1-p.wav lovel=1 hivel=79 seq_position=1 seq_length=2 volume=-3
+<region>
+sample=Samples\taiko1-m.wav lovel=1 hivel=79 seq_position=2 seq_length=2 volume=-3
+<region>
+sample=Samples\taiko1-f1.wav lovel=80 hivel=127 seq_position=1 seq_length=2
+<region>
+sample=Samples\taiko1-f2.wav lovel=80 hivel=127 seq_position=2 seq_length=2
+
+
+// ------------------------------
+//          Taiko Rims
+// ------------------------------
+
+<group>
+//loop_mode=one_shot
+ampeg_release=5
+pitch_keytrack=0
+lokey=g4 hikey=g#4 pitch_keycenter=g4
+
+<region>
+sample=Samples\Taiko Drum Sticks-1.wav lovel=1 hivel=49 seq_position=1 seq_length=2
+<region>
+sample=Samples\Taiko Drum Sticks-0.wav lovel=1 hivel=49 seq_position=2 seq_length=2
+<region>
+sample=Samples\Taiko Drum Sticks-2.wav lovel=50 hivel=92 seq_position=1 seq_length=3
+<region>
+sample=Samples\Taiko Drum Sticks-3.wav lovel=50 hivel=92 seq_position=2 seq_length=3
+<region>
+sample=Samples\Taiko Drum Sticks-5.wav lovel=50 hivel=92 seq_position=3 seq_length=3
+<region>
+sample=Samples\Taiko Drum Sticks-4.wav lovel=93 hivel=127 seq_position=1 seq_length=2
+<region>
+sample=Samples\Taiko Drum Sticks-6.wav lovel=93 hivel=127 seq_position=2 seq_length=2
+
+
+// ------------------------------
+//         Taiko Sticks
+// ------------------------------
+
+<group>
+//loop_mode=one_shot
+ampeg_release=5
+pitch_keytrack=0
+lokey=a4 hikey=a#4 pitch_keycenter=a4
+
+<region>
+sample=Samples\Taiko Lt Sticks-0.wav lovel=1 hivel=27
+<region>
+sample=Samples\Taiko Lt Sticks-1.wav lovel=28 hivel=54
+<region>
+sample=Samples\Taiko Lt Sticks-2.wav lovel=55 hivel=81
+<region>
+sample=Samples\Taiko Lt Sticks-3.wav lovel=82 hivel=104
+<region>
+sample=Samples\Taiko Lt Sticks-4.wav lovel=105 hivel=127 volume=-6
+
