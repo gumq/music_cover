@@ -88,17 +88,33 @@ def _find_instrumental_in(folder: Path) -> Optional[Path]:
         p = folder / name
         if p.exists():
             return p
-    # Fallback: lấy file WAV dài nhất trong folder
-    wavs = list(folder.glob("*.wav"))
+    # Fallback: lấy file WAV dài nhất trong folder, trừ 'vocals'
+    wavs = [w for w in folder.glob("*.wav") if w.name.lower() != "vocals.wav"]
     if wavs:
         return sorted(wavs, key=lambda x: x.stat().st_size, reverse=True)[0]
     return None
 
 
-def separate_vocals_demucs(input_path: str, out_dir: Optional[str] = None) -> str:
+def _find_vocals_in(folder: Path) -> Optional[Path]:
+    """Tìm file vocals do Demucs xuất (thường là 'vocals.wav')."""
+    candidates = [
+        "vocals.wav",
+    ]
+    for name in candidates:
+        p = folder / name
+        if p.exists():
+            return p
+    # fallback: file có 'vocals' trong tên
+    for p in folder.glob("*.wav"):
+        if "vocal" in p.stem.lower():
+            return p
+    return None
+
+
+def separate_vocals_demucs(input_path: str, out_dir: Optional[str] = None) -> tuple[str, Optional[str]]:
     """
     Dùng Demucs (--two-stems=vocals) để tách giọng & nền.
-    Trả về đường dẫn file instrumental (không có vocal).
+    Trả về (instrumental_path, vocals_path) - vocals_path có thể là None nếu không tìm thấy.
     """
     which_or_raise("ffmpeg")
     python_exe = sys.executable or "python"
@@ -108,8 +124,6 @@ def separate_vocals_demucs(input_path: str, out_dir: Optional[str] = None) -> st
     else:
         os.makedirs(out_dir, exist_ok=True)
 
-    # Ví dụ lệnh:
-    # python -m demucs --two-stems=vocals -n htdemucs_ft -o <out_dir> <input>
     cmd = [
         python_exe, "-m", "demucs",
         "--two-stems=vocals",
@@ -119,10 +133,8 @@ def separate_vocals_demucs(input_path: str, out_dir: Optional[str] = None) -> st
     ]
     run_cmd(cmd)
 
-    # Demucs tạo: out_dir/<model>/<basename>/{no_vocals.wav, vocals.wav}
     base = Path(input_path).stem
     model_dir = Path(out_dir)
-    # tìm thư mục con chứa base
     target_sub = None
     for sub in model_dir.glob("*"):
         if sub.is_dir():
@@ -130,23 +142,26 @@ def separate_vocals_demucs(input_path: str, out_dir: Optional[str] = None) -> st
             if candidate.exists():
                 target_sub = candidate
                 break
-
-    # Nếu không theo cấu trúc model/base, thử tìm sâu hơn
     if target_sub is None:
         for sub in model_dir.rglob(base):
             if sub.is_dir():
                 target_sub = sub
                 break
-
     if target_sub is None:
         raise FileNotFoundError("Không tìm được thư mục output của Demucs.")
 
     instrumental = _find_instrumental_in(target_sub)
+    vocals = _find_vocals_in(target_sub)
+
     if not instrumental or not instrumental.exists():
         raise FileNotFoundError(f"Không tìm thấy file instrumental sau khi tách trong: {target_sub}")
 
     print(f"[OK] Instrumental: {instrumental}")
-    return str(instrumental)
+    if vocals and vocals.exists():
+        print(f"[OK] Vocals: {vocals}")
+    else:
+        print("[Warn] Không tìm thấy vocals.wav, sẽ bỏ qua nguồn giọng hát.")
+    return str(instrumental), (str(vocals) if vocals and vocals.exists() else None)
 
 
 # ----------------------------- Step 2: Transform audio -----------------------------
@@ -209,6 +224,30 @@ def transform_audio(
     return out_wav
 
 
+# ----------------------------- Step 2.4: Helpers for overlay/lofi -----------------------------
+
+def overlay_audio(main_wav: str, overlay_wav: str, overlay_db: float = -6.0) -> str:
+    """Overlay overlay_wav on top of main_wav with overlay gain in dB (negative = quieter)."""
+    main = AudioSegment.from_file(main_wav)
+    over = AudioSegment.from_file(overlay_wav)
+    over = over + float(overlay_db)
+    mixed = main.overlay(over)
+    out_wav = make_temp_wav("_overlay.wav")
+    mixed.export(out_wav, format="wav")
+    print(f"[Mix] Overlay melody {overlay_db} dB -> {out_wav}")
+    return out_wav
+
+
+def apply_lofi(wav_path: str, lowpass_hz: int = 1400) -> str:
+    """Apply a gentle low-pass filter to achieve a lofi vibe."""
+    seg = AudioSegment.from_file(wav_path)
+    seg = seg.low_pass_filter(int(lowpass_hz))
+    out_wav = make_temp_wav("_lofi.wav")
+    seg.export(out_wav, format="wav")
+    print(f"[FX] Lofi lowpass f={lowpass_hz} Hz -> {out_wav}")
+    return out_wav
+
+
 # ----------------------------- Step 2.5: Instrumental -> Melody MIDI -> Synth WAV -----------------------------
 
 def audio_to_melody_midi(
@@ -216,16 +255,16 @@ def audio_to_melody_midi(
     out_midi_path: Optional[str] = None,
     method: str = "pyin",
     hop_length: int = 512,
-    fmin_hz: float = 82.41,  # E2
-    fmax_hz: float = 1046.5,  # C6 (~ soprano upper)
+    fmin_hz: float = 82.41,
+    fmax_hz: float = 1046.5,
     min_note_ms: int = 60,
     program: int = 0,
     velocity: int = 100,
 ) -> str:
     """
     Extract simple monophonic melody from audio and write a MIDI file.
-    - method: 'pyin' (default) with fallback to 'yin'
-    - program: MIDI program number (0=Acoustic Grand Piano)
+    method: 'pyin' | 'yin' | 'crepe'
+    program: MIDI program number (0=Acoustic Grand Piano).
     Returns path to MIDI file.
     """
     try:
@@ -234,12 +273,15 @@ def audio_to_melody_midi(
         raise RuntimeError("Cần thư viện 'mido' để xuất MIDI. Hãy cài: pip install mido") from e
 
     y, sr = librosa.load(input_wav, sr=None, mono=True)
-    print(f"[MIDI] Phân tích melody từ: {input_wav} (sr={sr})")
+    print(f"[MIDI] Phân tích melody từ: {input_wav} (sr={sr}, method={method})")
 
     f0 = None
+    times = None
     voiced_mask = None
-    try:
-        if method.lower() == "pyin":
+
+    m = method.lower()
+    if m == "pyin":
+        try:
             f0, voiced_flag, _ = librosa.pyin(
                 y,
                 fmin=fmin_hz,
@@ -248,16 +290,43 @@ def audio_to_melody_midi(
                 hop_length=hop_length,
             )
             voiced_mask = (voiced_flag == True) & (~np.isnan(f0))
-        else:
-            raise ValueError
-    except Exception:
-        # Fallback: YIN
-        print("[MIDI] pyin thất bại, fallback sang librosa.yin ...")
-        f0 = librosa.yin(y, fmin=fmin_hz, fmax=fmax_hz, sr=sr, hop_length=hop_length)
-        # Simple voicing: keep positive frequencies
-        voiced_mask = np.isfinite(f0) & (f0 > 0)
+            times = librosa.times_like(f0, sr=sr, hop_length=hop_length)
+        except Exception:
+            print("[MIDI] pyin thất bại, fallback sang yin ...")
+            m = "yin"
 
-    times = librosa.times_like(f0, sr=sr, hop_length=hop_length)
+    if m == "yin":
+        if f0 is None:
+            f0 = librosa.yin(y, fmin=fmin_hz, fmax=fmax_hz, sr=sr, hop_length=hop_length)
+        voiced_mask = np.isfinite(f0) & (f0 > 0)
+        times = librosa.times_like(f0, sr=sr, hop_length=hop_length)
+
+    if m == "crepe":
+        try:
+            import crepe
+            y_f32 = y.astype(np.float32)
+            # crepe outputs at ~100 fps by default; viterbi stabilizes pitch
+            times_c, f0_c, conf, _ = crepe.predict(y_f32, sr, viterbi=True)
+            f0 = f0_c
+            times = times_c
+            # voiced threshold 0.3
+            voiced_mask = (conf >= 0.3) & np.isfinite(f0)
+        except Exception as e:
+            print(f"[MIDI] CREPE thất bại ({e}), fallback sang pyin ...")
+            return audio_to_melody_midi(
+                input_wav,
+                out_midi_path=out_midi_path,
+                method="pyin",
+                hop_length=hop_length,
+                fmin_hz=fmin_hz,
+                fmax_hz=fmax_hz,
+                min_note_ms=min_note_ms,
+                program=program,
+                velocity=velocity,
+            )
+
+    if f0 is None or times is None or voiced_mask is None:
+        raise RuntimeError("Không lấy được f0/time từ audio để tạo MIDI.")
 
     # Group frames into note segments with same quantized MIDI
     segments = []  # list of (start_time, end_time, midi_note)
@@ -268,28 +337,25 @@ def audio_to_melody_midi(
         return int(np.clip(np.round(librosa.hz_to_midi(hz)), 0, 127))
 
     for idx, t in enumerate(times):
-        if voiced_mask[idx]:
-            note_num = hz_to_midi_int(float(f0[idx]))
-        else:
-            note_num = None
+        note_num = None
+        if idx < len(voiced_mask) and voiced_mask[idx]:
+            freq = float(f0[idx])
+            if np.isfinite(freq) and freq > 0:
+                note_num = hz_to_midi_int(freq)
 
         if current_note is None and note_num is not None:
             current_note = note_num
             seg_start_idx = idx
         elif current_note is not None and note_num == current_note:
-            # continue segment
             pass
         else:
-            # close previous segment if exists
             if current_note is not None and seg_start_idx is not None:
                 start_t = float(times[seg_start_idx])
                 end_t = float(times[idx])
                 segments.append((start_t, end_t, current_note))
-            # start new segment if note present
             current_note = note_num
             seg_start_idx = idx if note_num is not None else None
 
-    # close last
     if current_note is not None and seg_start_idx is not None:
         start_t = float(times[seg_start_idx])
         end_t = float(times[-1])
@@ -302,15 +368,12 @@ def audio_to_melody_midi(
     if not segments:
         raise RuntimeError("Không tìm thấy đoạn melody hợp lệ để xuất MIDI.")
 
-    # Build MIDI
+    import mido
     mid = mido.MidiFile(ticks_per_beat=480)
     track = mido.MidiTrack()
     mid.tracks.append(track)
-
-    # Set tempo 120 BPM
     tempo = mido.bpm2tempo(120)
     track.append(mido.MetaMessage('set_tempo', tempo=tempo, time=0))
-    # Program change at start
     program_clamped = int(np.clip(program, 0, 127))
     track.append(mido.Message('program_change', program=program_clamped, channel=0, time=0))
 
@@ -320,10 +383,7 @@ def audio_to_melody_midi(
         end_tick = int(mido.second2tick(e, mid.ticks_per_beat, tempo))
         dur_tick = max(1, end_tick - start_tick)
         delta = max(0, start_tick - current_tick)
-        if delta > 0:
-            track.append(mido.Message('note_on', note=note, velocity=velocity, time=delta, channel=0))
-        else:
-            track.append(mido.Message('note_on', note=note, velocity=velocity, time=0, channel=0))
+        track.append(mido.Message('note_on', note=note, velocity=velocity, time=delta, channel=0))
         track.append(mido.Message('note_off', note=note, velocity=0, time=dur_tick, channel=0))
         current_tick = start_tick + dur_tick
 
@@ -522,14 +582,29 @@ def parse_args():
     p.add_argument("--reverb", action="store_true", help="Bật reverb đơn giản")
     p.add_argument("--volume", type=float, default=1.0, help="Hệ số volume sau cùng (1.0 giữ nguyên)")
 
+    # New: Style + Melody options
+    p.add_argument("--style", choices=[
+        "original",
+        "piano",
+        "music_box",
+        "strings",
+        "chip",
+        "lofi",
+        "melody_only",
+    ], default="original", help="Phong cách cover")
+    p.add_argument("--melody_source", choices=["auto", "vocals", "instrumental", "input"], default="auto",
+                   help="Chọn nguồn để trích melody")
+
     # New: Melody->MIDI->Synth options
     p.add_argument("--soundfont", type=str, default="", help="Đường dẫn SoundFont (.sf2) để synth MIDI")
     p.add_argument("--midi_pitch", type=float, default=0.0, help="Dịch cao độ MIDI (semitones, ví dụ ±1)")
     p.add_argument("--midi_program", type=int, default=0, help="MIDI program (0=Grand Piano)")
     p.add_argument("--midi_velocity", type=int, default=100, help="Độ mạnh nốt MIDI (0-127)")
     p.add_argument("--midi_min_note_ms", type=int, default=60, help="Bỏ qua nốt ngắn hơn (ms)")
-    p.add_argument("--melody_method", choices=["pyin"], default="pyin", help="Thuật toán tách melody")
+    p.add_argument("--melody_method", choices=["pyin", "yin", "crepe"], default="pyin", help="Thuật toán tách melody")
     p.add_argument("--fs_gain", type=float, default=0.8, help="FluidSynth gain (0-5)")
+    p.add_argument("--overlay_db", type=float, default=-6.0, help="Âm lượng synth melody khi overlay (dB, âm=nhỏ hơn)")
+    p.add_argument("--lofi_lowpass_hz", type=int, default=1400, help="Tần số cắt lowpass cho style lofi")
 
     p.add_argument("--mode", choices=["full", "loop"], default="full", help="Xuất full bài hoặc loop N giờ")
     p.add_argument("--loop_hours", type=float, default=1.0, help="Số giờ lặp nếu mode=loop")
@@ -551,10 +626,10 @@ def main():
 
     print("=== Music Cover Tool (Demucs) ===")
     print("[1/4] Tách giọng (Demucs) ...")
-    instrumental = separate_vocals_demucs(args.input_audio)
+    instrumental, vocals = separate_vocals_demucs(args.input_audio)
 
     print("[2/4] Biến đổi instrumental (pitch/tempo/reverb/volume) ...")
-    processed = transform_audio(
+    processed_inst = transform_audio(
         instrumental,
         pitch_semitones=args.pitch,
         tempo=args.tempo,
@@ -563,30 +638,71 @@ def main():
         volume=args.volume
     )
 
-    # Optional: Melody -> MIDI -> Synth using SoundFont
-    processed_for_mix = processed
-    if args.soundfont:
+    # Determine melody source
+    melody_src = None
+    if args.melody_source == "vocals":
+        melody_src = vocals
+    elif args.melody_source == "instrumental":
+        melody_src = processed_inst
+    elif args.melody_source == "input":
+        melody_src = args.input_audio
+    else:  # auto
+        melody_src = vocals if vocals else args.input_audio
+
+    # If melody source is vocals, align pitch/tempo to processed instrumental (apply same pitch/tempo without FX)
+    if melody_src and vocals and melody_src == vocals and (abs(args.pitch) > 1e-6 or abs(args.tempo - 1.0) > 1e-6):
+        melody_src = transform_audio(vocals, pitch_semitones=args.pitch, tempo=args.tempo, apply_reverb=False, volume=1.0)
+
+    # Style pipeline
+    styled_audio = processed_inst
+    if args.style != "original" and args.soundfont:
         try:
-            print("[2.5/4] Instrumental → MIDI (melody), chỉnh pitch MIDI, synth bằng SoundFont ...")
-            midi_tmp = audio_to_melody_midi(
-                processed,
-                out_midi_path=None,
-                method=args.melody_method,
-                hop_length=512,
-                fmin_hz=82.41,
-                fmax_hz=1046.5,
-                min_note_ms=int(args.midi_min_note_ms),
-                program=int(args.midi_program),
-                velocity=int(args.midi_velocity),
-            )
-            midi_shifted = shift_midi_semitones(midi_tmp, args.midi_pitch)
-            synth_wav = synth_midi_with_sf2(midi_shifted, args.soundfont, out_wav_path=None, sample_rate=44100, gain=float(args.fs_gain))
-            processed_for_mix = synth_wav
+            style_program_map = {
+                "piano": 0,
+                "music_box": 10,
+                "strings": 48,
+                "chip": 80,
+                "lofi": 0,
+                "melody_only": 0,
+            }
+            program_to_use = style_program_map.get(args.style, 0)
+            # Allow override from CLI if user provided non-default or style is piano
+            if args.midi_program != 0 or args.style == "piano":
+                program_to_use = int(args.midi_program)
+
+            if melody_src:
+                print("[2.5/4] Melody → MIDI → Synth theo style ...")
+                midi_tmp = audio_to_melody_midi(
+                    melody_src,
+                    out_midi_path=None,
+                    method=args.melody_method,
+                    hop_length=512,
+                    fmin_hz=82.41,
+                    fmax_hz=1046.5,
+                    min_note_ms=int(args.midi_min_note_ms),
+                    program=int(program_to_use),
+                    velocity=int(args.midi_velocity),
+                )
+                midi_shifted = shift_midi_semitones(midi_tmp, args.midi_pitch)
+                synth_wav = synth_midi_with_sf2(midi_shifted, args.soundfont, out_wav_path=None, sample_rate=44100, gain=float(args.fs_gain))
+
+                if args.style == "melody_only":
+                    styled_audio = synth_wav
+                else:
+                    over_db = float(args.overlay_db)
+                    styled_audio = overlay_audio(processed_inst, synth_wav, overlay_db=over_db)
+
+                    if args.style == "lofi":
+                        styled_audio = apply_lofi(styled_audio, lowpass_hz=int(args.lofi_lowpass_hz))
+            else:
+                print("[Cảnh báo] Không có nguồn melody phù hợp, bỏ qua style.")
         except Exception as e:
-            print(f"[Cảnh báo] Melody→MIDI→Synth lỗi, sẽ dùng audio đã xử lý ban đầu. Lý do: {e}")
+            print(f"[Cảnh báo] Style pipeline lỗi, dùng audio đã xử lý ban đầu. Lý do: {e}")
+    elif args.style != "original" and not args.soundfont:
+        print("[Cảnh báo] Chọn style nhưng thiếu --soundfont (.sf2). Sẽ bỏ qua style.")
 
     print("[3/4] Trộn nền (mưa) nếu có ...")
-    mixed = mix_background(processed_for_mix, args.rain, bg_db=args.rain_db) if args.rain else processed_for_mix
+    mixed = mix_background(styled_audio, args.rain, bg_db=args.rain_db) if args.rain else styled_audio
 
     print("[4/4] Render video (ffmpeg) ...")
     if args.mode == "full":
